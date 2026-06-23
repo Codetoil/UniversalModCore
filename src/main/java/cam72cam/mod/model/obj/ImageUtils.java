@@ -1,6 +1,6 @@
 package cam72cam.mod.model.obj;
 
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.awt.*;
@@ -41,7 +41,7 @@ public class ImageUtils {
 
             //pixels[i] = (argb & 0xFFFFFF) << 8 | (argb >> 24);
         }
-        ModCore.debug("Fetching pixels for %sx%s took %sms", image.getWidth(), image.getHeight(), (System.currentTimeMillis() - start));
+        UMC.debug("Fetching pixels for %sx%s took %sms", image.getWidth(), image.getHeight(), (System.currentTimeMillis() - start));
         return pixels;
     }
 }

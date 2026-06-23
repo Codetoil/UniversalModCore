@@ -1,15 +1,11 @@
 package cam72cam.mod.entity.boundingbox;
 
 import cam72cam.mod.math.Vec3d;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.RayTraceResult;
 
-public class BoundingBox extends AxisAlignedBB {
+public class BoundingBox {
     public final IBoundingBox internal;
 
     private BoundingBox(IBoundingBox internal, double[] constructorParams) {
-        super(constructorParams[0], constructorParams[1], constructorParams[2], constructorParams[3], constructorParams[4], constructorParams[5]);
         this.internal = internal;
     }
 
@@ -17,11 +13,8 @@ public class BoundingBox extends AxisAlignedBB {
         this(internal, hack(internal));
     }
 
-    public static AxisAlignedBB from(IBoundingBox internal) {
-        if (internal instanceof DefaultBoundingBox) {
-            return ((DefaultBoundingBox) internal).internal;
-        }
-        return new BoundingBox(internal);
+    public static BoundingBox from(IBoundingBox internal) {
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     private static double[] hack(IBoundingBox internal) {
@@ -31,20 +24,17 @@ public class BoundingBox extends AxisAlignedBB {
     }
 
     /* NOP */
-    @Override
     public BoundingBox setMaxY(double y) {
         // Used by blockwall
         return this;
     }
 
-    @Override
-    public BoundingBox intersect(AxisAlignedBB p_191500_1_) {
+    public BoundingBox intersect(BoundingBox p_191500_1_) {
         // Used by piston
         return this;
     }
 
-    @Override
-    public BoundingBox union(AxisAlignedBB other) {
+    public BoundingBox union(BoundingBox other) {
         // Used by piston
         // Used by entityliving for BB stuff
         return this;
@@ -52,12 +42,10 @@ public class BoundingBox extends AxisAlignedBB {
 
     /* Modifiers */
 
-    @Override
     public BoundingBox expand(double x, double y, double z) {
         return new BoundingBox(internal.expand(new Vec3d(x, y, z)));
     }
 
-    @Override
     public BoundingBox contract(double x, double y, double z) {
         return new BoundingBox(internal.contract(new Vec3d(x, y, z)));
     }
@@ -71,47 +59,24 @@ public class BoundingBox extends AxisAlignedBB {
     }
 
     /* Interactions */
-    @Override
-    public double calculateXOffset(AxisAlignedBB other, double offsetX) {
+    public double calculateXOffset(BoundingBox other, double offsetX) {
         return internal.calculateXOffset(IBoundingBox.from(other), offsetX);
     }
 
-    @Override
-    public double calculateYOffset(AxisAlignedBB other, double offsetY) {
+    public double calculateYOffset(BoundingBox other, double offsetY) {
         return internal.calculateYOffset(IBoundingBox.from(other), offsetY);
     }
 
-    @Override
-    public double calculateZOffset(AxisAlignedBB other, double offsetZ) {
+    public double calculateZOffset(BoundingBox other, double offsetZ) {
         return internal.calculateZOffset(IBoundingBox.from(other), offsetZ);
     }
 
-    @Override
     public boolean intersects(double minX, double minY, double minZ, double maxX, double maxY, double maxZ) {
-        return super.intersects(minX, minY, minZ, maxX, maxY, maxZ) && // Fast check
-                internal.intersects(new Vec3d(minX, minY, minZ), new Vec3d(maxX, maxY, maxZ)); // Slow check
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
-    @Override
-    public boolean contains(net.minecraft.util.math.Vec3d vec) {
-        return internal.contains(new Vec3d(vec));
-    }
+    public double getMinX()
+    {
 
-    @Override
-    public RayTraceResult calculateIntercept(net.minecraft.util.math.Vec3d vecA, net.minecraft.util.math.Vec3d vecB) {
-        int steps = 10;
-        double xDist = vecB.x - vecA.x;
-        double yDist = vecB.y - vecA.y;
-        double zDist = vecB.z - vecA.z;
-        double xDelta = xDist / steps;
-        double yDelta = yDist / steps;
-        double zDelta = zDist / steps;
-        for (int step = 0; step < steps; step++) {
-            Vec3d stepPos = new Vec3d(vecA.x + xDelta * step, vecA.y + yDelta * step, vecA.z + zDelta * step);
-            if (internal.contains(stepPos)) {
-                return new RayTraceResult(stepPos.internal(), EnumFacing.UP);
-            }
-        }
-        return null;
     }
 }

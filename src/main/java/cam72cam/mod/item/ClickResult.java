@@ -1,7 +1,5 @@
 package cam72cam.mod.item;
 
-import net.minecraft.util.EnumActionResult;
-
 public enum ClickResult {
     /** Handled */
     ACCEPTED(EnumActionResult.SUCCESS),

@@ -1,9 +1,8 @@
 package cam72cam.mod.item;
 
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import cam72cam.mod.entity.Entity;
 import cam72cam.mod.entity.Player;
-import cam72cam.mod.event.CommonEvents;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.resource.Identifier;
@@ -11,19 +10,7 @@ import cam72cam.mod.serialization.SerializationException;
 import cam72cam.mod.serialization.TagSerializer;
 import cam72cam.mod.util.Facing;
 import cam72cam.mod.world.World;
-import net.minecraft.client.util.ITooltipFlag;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.inventory.EntityEquipmentSlot;
-import net.minecraft.item.Item;
-import net.minecraft.util.*;
-import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.fml.common.Optional;
-import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
-import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -158,7 +145,7 @@ public abstract class CustomItem {
             try {
                 TagSerializer.deserialize(stack.getTagCompound(), this);
             } catch (SerializationException e) {
-                ModCore.catching(e);
+                UMC.catching(e);
             }
         }
 
@@ -166,7 +153,7 @@ public abstract class CustomItem {
             try {
                 TagSerializer.serialize(stack.getTagCompound(), this);
             } catch (SerializationException e) {
-                ModCore.catching(e);
+                UMC.catching(e);
             }
         }
     }

@@ -1,6 +1,6 @@
 package cam72cam.mod.resource;
 
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.*;
 import net.minecraft.client.resources.data.IMetadataSection;
@@ -101,7 +101,7 @@ public class BuiltinPack {
     /**
      * Internal
      */
-    public static void loadModResource(ModCore.Mod mod) {
+    public static void loadModResource(UMC.Mod mod) {
         List<IResourcePack> packs = Minecraft.getMinecraft().defaultResourcePacks;
 
         String configDir = Loader.instance().getConfigDir().toString();
@@ -220,7 +220,7 @@ public class BuiltinPack {
 
         @Override
         public Set<String> getResourceDomains() {
-            Set<String> collect = ModCore.instance.getLoadedMods().stream().map(ModCore.Mod::modID).collect(Collectors.toSet());
+            Set<String> collect = UMC.instance.getLoadedMods().stream().map(UMC.Mod::modID).collect(Collectors.toSet());
             collect.add("universalmodcore");
             return collect;
         }

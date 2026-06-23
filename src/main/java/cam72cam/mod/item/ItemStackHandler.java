@@ -1,6 +1,8 @@
 package cam72cam.mod.item;
 
 import cam72cam.mod.serialization.*;
+import cam72cam.umc.api.serialization.*;
+import cam72cam.umc.serialization.*;
 
 import javax.annotation.Nonnull;
 import java.lang.reflect.Constructor;

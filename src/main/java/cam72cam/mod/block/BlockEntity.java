@@ -1,5 +1,6 @@
 package cam72cam.mod.block;
 
+import cam72cam.mod.serialization.TagSerializer;
 import cam72cam.mod.block.tile.TileEntity;
 import cam72cam.mod.energy.IEnergy;
 import cam72cam.mod.entity.Player;
@@ -39,7 +40,7 @@ public abstract class BlockEntity {
      * Called on the server during chunk load.<br>
      * Called on the client during packet synchronization.
      *
-     * @see cam72cam.mod.serialization.TagSerializer
+     * @see TagSerializer
      */
     public void load(TagCompound nbt) throws SerializationException {
     }
@@ -48,7 +49,7 @@ public abstract class BlockEntity {
      * Use for explicit saving, prefer TagSerializer.<br>
      * Called on the server during chunk save.
      *
-     * @see cam72cam.mod.serialization.TagSerializer
+     * @see TagSerializer
      */
     public void save(TagCompound nbt) throws SerializationException {
     }
@@ -94,16 +95,10 @@ public abstract class BlockEntity {
     }
 
     /** Marks block for re-render on the client or sends an update packet on the server. */
-    public void markDirty() {
-        internal.markDirty();
-    }
+    public abstract void markDirty();
 
     /** @return the data that would be written to disk on world save */
-    public TagCompound getData() {
-        TagCompound data = new TagCompound();
-        internal.writeToNBT(data.internal);
-        return data;
-    }
+    public abstract TagCompound getData();
 
     /** Implement to support inventory capabilities */
     public IInventory getInventory(Facing side) {
@@ -126,9 +121,7 @@ public abstract class BlockEntity {
     }
 
     /** @return Bounding Box (offset from origin) */
-    public IBoundingBox getBoundingBox() {
-        return BlockType.defaultBox;
-    }
+    public abstract IBoundingBox getBoundingBox();
 
     /** @return Bounding Box (offset from origin) */
     public IBoundingBox getRenderBoundingBox() {
@@ -145,7 +138,5 @@ public abstract class BlockEntity {
      * @param id BlockTypeEntity identifier
      * @return A new instance of the custom TileEntity
      */
-    protected TileEntity supplier(Identifier id) {
-        return new TileEntity(id);
-    }
+    protected abstract TileEntity supplier(Identifier id);
 }

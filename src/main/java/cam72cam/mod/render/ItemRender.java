@@ -2,8 +2,7 @@ package cam72cam.mod.render;
 
 import cam72cam.mod.Config;
 import cam72cam.mod.MinecraftClient;
-import cam72cam.mod.ModCore;
-import cam72cam.mod.event.ClientEvents;
+import cam72cam.mod.UMC;
 import cam72cam.mod.gui.Progress;
 import cam72cam.mod.item.CustomItem;
 import cam72cam.mod.item.ItemStack;
@@ -41,7 +40,6 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
 /** Item Render Registry (Here be dragons...) */
 public class ItemRender {
@@ -158,7 +156,7 @@ public class ItemRender {
     private static void createSprite(Identifier id, StandardModel model) {
         int width = iconSheet.spriteSize;
         int height = iconSheet.spriteSize;
-        File sprite = ModCore.cacheFile(new Identifier(id.getDomain(),id.getPath() + "_sprite" + iconSheet.spriteSize + ".raw"));
+        File sprite = UMC.cacheFile(new Identifier(id.getDomain(),id.getPath() + "_sprite" + iconSheet.spriteSize + ".raw"));
         if (sprite.exists()) {
             try {
                 ByteBuffer buff = GLAllocation.createDirectByteBuffer(4 * width * height);
@@ -216,7 +214,7 @@ public class ItemRender {
             buff.get(data);
             Files.write(sprite.toPath(), data);
         } catch (IOException e) {
-            ModCore.catching(e);
+            UMC.catching(e);
             sprite.delete();
         }
 

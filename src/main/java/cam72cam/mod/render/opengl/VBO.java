@@ -1,6 +1,5 @@
 package cam72cam.mod.render.opengl;
 
-import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.model.obj.VertexBuffer;
 import cam72cam.mod.util.With;
 import net.minecraft.client.renderer.GLAllocation;

@@ -2,18 +2,11 @@ package cam72cam.mod.entity;
 
 import cam72cam.mod.item.ItemStack;
 import cam72cam.mod.world.World;
-import net.minecraft.entity.item.EntityItem;
 
 /**
  * Represents an item entity in the world, wrapping Minecraft's EntityItem.
  */
 public class ItemEntity extends Entity {
-    public final EntityItem internal;
-
-    public ItemEntity(EntityItem entity) {
-        super(entity);
-        this.internal = entity;
-    }
 
     public ItemStack getContent() {
         if (!isValid()) {

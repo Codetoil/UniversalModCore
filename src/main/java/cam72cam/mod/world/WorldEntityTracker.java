@@ -1,10 +1,6 @@
 package cam72cam.mod.world;
 
 import cam72cam.mod.entity.ModdedEntity;
-import it.unimi.dsi.fastutil.longs.Long2ObjectOpenHashMap;
-import it.unimi.dsi.fastutil.longs.LongArraySet;
-import it.unimi.dsi.fastutil.longs.LongOpenHashSet;
-import it.unimi.dsi.fastutil.objects.ObjectArraySet;
 
 import java.util.Collection;
 import java.util.Map;
@@ -14,7 +10,6 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 /**
  * Track UMC Entities and handle inter chunk collision
- * @see cam72cam.mod.mixin.feat.large_entity_collision.MixinVanillaWorld
  */
 public class WorldEntityTracker {
     //Good enough for now...We'd assume there's no more ridiculous ones

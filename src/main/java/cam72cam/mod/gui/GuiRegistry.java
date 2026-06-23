@@ -1,6 +1,6 @@
 package cam72cam.mod.gui;
 
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import cam72cam.mod.block.BlockEntity;
 import cam72cam.mod.entity.Entity;
 import cam72cam.mod.entity.Player;
@@ -33,7 +33,7 @@ public class GuiRegistry {
 
     /** Internal event registration, do not use */
     public static void registration() {
-        NetworkRegistry.INSTANCE.registerGuiHandler(ModCore.instance, new IGuiHandler() {
+        NetworkRegistry.INSTANCE.registerGuiHandler(UMC.instance, new IGuiHandler() {
             @Nullable
             @Override
             public Object getServerGuiElement(int ID, EntityPlayer player, World world, int x, int y, int z) {
@@ -83,7 +83,7 @@ public class GuiRegistry {
             }
             return new ScreenBuilder(ctr.get(), () -> true);
         });
-        return (player) -> player.internal.openGui(ModCore.instance, id, player.getWorld().internal, 0, 0, 0);
+        return (player) -> player.internal.openGui(UMC.instance, id, player.getWorld().internal, 0, 0, 0);
     }
 
     /** Register a Block based GUI */
@@ -104,7 +104,7 @@ public class GuiRegistry {
 
             return new ScreenBuilder(screen, () -> event.player.getWorld().getBlockEntity(new Vec3i(event.entityIDorX, event.y, event.z), cls) == entity);
         });
-        return (player, pos) -> player.internal.openGui(ModCore.instance, id, player.getWorld().internal, pos.x, pos.y, pos.z);
+        return (player, pos) -> player.internal.openGui(UMC.instance, id, player.getWorld().internal, pos.x(), pos.y(), pos.z());
     }
 
     /** Register a Block based Container */
@@ -121,7 +121,7 @@ public class GuiRegistry {
             }
             return new ClientContainerBuilder(server, () -> event.player.getWorld().getBlockEntity(new Vec3i(event.entityIDorX, event.y, event.z), cls) == entity);
         });
-        return (player, pos) -> player.internal.openGui(ModCore.instance, id, player.getWorld().internal, pos.x, pos.y, pos.z);
+        return (player, pos) -> player.internal.openGui(UMC.instance, id, player.getWorld().internal, pos.x(), pos.y(), pos.z());
     }
 
     /** Register a Entity based GUI */
@@ -142,7 +142,7 @@ public class GuiRegistry {
 
             return new ScreenBuilder(screen, () -> event.player.getWorld().getEntity(event.entityIDorX, cls) == entity);
         });
-        return (player, ent) -> player.internal.openGui(ModCore.instance, id, player.getWorld().internal, ent.internal.getEntityId(), 0, 0);
+        return (player, ent) -> player.internal.openGui(UMC.instance, id, player.getWorld().internal, ent.internal.getEntityId(), 0, 0);
     }
 
     /** Register a Entity based Container */
@@ -159,7 +159,7 @@ public class GuiRegistry {
             }
             return new ClientContainerBuilder(server, () -> event.player.getWorld().getEntity(event.entityIDorX, cls) == entity);
         });
-        return (player, ent) -> player.internal.openGui(ModCore.instance, id, player.getWorld().internal, ent.internal.getEntityId(), 0, 0);
+        return (player, ent) -> player.internal.openGui(UMC.instance, id, player.getWorld().internal, ent.internal.getEntityId(), 0, 0);
     }
 
     /** Used to represent a client or server create event (for passing params) */

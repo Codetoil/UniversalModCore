@@ -3,19 +3,10 @@ package cam72cam.mod.entity;
 import cam72cam.mod.entity.boundingbox.IBoundingBox;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
-import cam72cam.mod.util.SingleCache;
 import cam72cam.mod.world.World;
-import net.minecraft.entity.monster.EntityMob;
-import net.minecraft.entity.passive.EntityVillager;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.world.Explosion;
 
 import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 /**
  * The base entity abstraction that wraps MC entities.
@@ -23,61 +14,43 @@ import java.util.stream.Collectors;
  * TODO: Make sure we are setting prevRot/Loc stuff correctly.  Should it only be changed on a tick processing the movement?
  */
 public class Entity {
-    /** The wrapped MC construct.  Do not use directly */
-    public net.minecraft.entity.Entity internal;
-
-    /** Wrap a MC entity in UMC entity.  Do not use directly. */
-    public Entity(net.minecraft.entity.Entity entity) {
-        this.internal = entity;
-    }
 
     public World getWorld() {
-        return World.get(internal.world);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** UUID that persists across loads */
     public UUID getUUID() {
-        return internal.getPersistentID();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
-    private final SingleCache<Vec3d, Vec3i> blockPosCache = new SingleCache<>(pos -> new Vec3i(internal.getPosition()));
     /* Position / Rotation */
     public Vec3i getBlockPosition() {
-        return blockPosCache.get(getPosition());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
-    private Vec3d posCache;
     public Vec3d getPosition() {
-        if (posCache == null || (
-                posCache.x != internal.posX ||
-                posCache.y != internal.posY ||
-                posCache.z != internal.posZ )
-        ) {
-            posCache = new Vec3d(internal.getPositionVector());
-        }
-        return posCache;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public void setPosition(Vec3d pos) {
-        internal.setPosition(pos.x, pos.y, pos.z);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public Vec3d getVelocity() {
-        return new Vec3d(internal.motionX, internal.motionY, internal.motionZ);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public void setVelocity(Vec3d motion) {
-        internal.motionX = motion.x;
-        internal.motionY = motion.y;
-        internal.motionZ = motion.z;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public float getRotationYaw() {
-        return internal.rotationYaw;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public float getRotationPitch() {
-        return internal.rotationPitch;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /**
@@ -88,11 +61,11 @@ public class Entity {
     }
 
     public float getRotationYaw(float partialTicks) {
-        return (float) MathHelper.clampedLerp(internal.prevRotationYaw, internal.rotationYaw, partialTicks);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public float getRotationPitch(float partialTicks) {
-        return (float) MathHelper.clampedLerp(internal.prevRotationPitch, internal.rotationPitch, partialTicks);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /**
@@ -103,31 +76,11 @@ public class Entity {
     }
 
     public void setRotationYaw(float yaw) {
-        internal.prevRotationYaw = internal.rotationYaw;
-        internal.rotationYaw = yaw;
-
-        while (internal.rotationYaw - internal.prevRotationYaw < -180.0F)
-        {
-            internal.prevRotationYaw -= 360.0F;
-        }
-        while (internal.rotationYaw - internal.prevRotationYaw >= 180.0F)
-        {
-            internal.prevRotationYaw += 360.0F;
-        }
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public void setRotationPitch(float pitch) {
-        internal.prevRotationPitch = internal.rotationPitch;
-        internal.rotationPitch = pitch;
-
-        while (internal.rotationPitch - internal.prevRotationPitch < -180.0F)
-        {
-            internal.prevRotationPitch -= 360.0F;
-        }
-        while (internal.rotationPitch - internal.prevRotationPitch >= 180.0F)
-        {
-            internal.prevRotationPitch += 360.0F;
-        }
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /**
@@ -137,11 +90,11 @@ public class Entity {
     }
 
     public float getPrevRotationYaw() {
-        return internal.prevRotationYaw;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public float getPrevRotationPitch() {
-        return internal.prevRotationPitch;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /**
@@ -153,20 +106,7 @@ public class Entity {
 
     Vec3d eyeCache;
     public Vec3d getPositionEyes() {
-        if (eyeCache == null || (
-                eyeCache.x != internal.posX ||
-                eyeCache.y != internal.posY + internal.getEyeHeight() ||
-                eyeCache.z != internal.posZ )
-        ) {
-            eyeCache = new Vec3d(internal.posX, internal.posY + internal.getEyeHeight(), internal.posZ);
-        }
-        return eyeCache;
-    }
-
-
-    private final SingleCache<Float, Vec3d> lookCache = new SingleCache<>(f -> new Vec3d(internal.getLookVec()));
-    public Vec3d getLookVector() {
-        return lookCache.get(internal.rotationYaw + internal.rotationPitch);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
 
@@ -186,11 +126,11 @@ public class Entity {
     }
 
     public boolean isVillager() {
-        return internal instanceof EntityVillager;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public boolean isMob() {
-        return internal instanceof EntityMob;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public boolean isPlayer() {
@@ -203,62 +143,55 @@ public class Entity {
 
 
     public void kill() {
-        internal.world.removeEntity(internal);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public final boolean isDead() {
-        return internal.isDead;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public int getTickCount() {
-        return internal.ticksExisted;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public int getPassengerCount() {
-        return internal.getPassengers().size();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
-    public void addPassenger(cam72cam.mod.entity.Entity passenger) {
-        passenger.internal.startRiding(internal);
+    public void addPassenger(Entity passenger) {
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
-    public boolean isPassenger(cam72cam.mod.entity.Entity passenger) {
-        return internal.isPassenger(passenger.internal);
+    public boolean isPassenger(Entity passenger) {
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public void removePassenger(Entity entity) {
-        entity.internal.dismountRidingEntity();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public List<Entity> getPassengers() {
-        return internal.getPassengers().stream().map(e -> getWorld().getEntity(e)).filter(Objects::nonNull).collect(Collectors.toList());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public Entity getRiding() {
-        if (internal.getRidingEntity() != null) {
-            if (internal.getRidingEntity() instanceof SeatEntity) {
-                return ((SeatEntity)internal.getRidingEntity()).getParent();
-            }
-            return getWorld().getEntity(internal.getRidingEntity());
-        }
-        return null;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
-    private final SingleCache<AxisAlignedBB, IBoundingBox> boundingBox = new SingleCache<>(IBoundingBox::from);
     public IBoundingBox getBounds() {
-        return boundingBox.get(internal.getEntityBoundingBox());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public float getRotationYawHead() {
-        return internal.getRotationYawHead();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public Vec3d getLastTickPos() {
-        return new Vec3d(internal.lastTickPosX, internal.lastTickPosY, internal.lastTickPosZ);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public void startRiding(Entity entity) {
-        internal.startRiding(entity.internal);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** If riding this entity, what modifier should be applied to the overall sound level */
@@ -268,18 +201,15 @@ public class Entity {
 
     /** Damage entity directly (bypassing armor) */
     public void directDamage(DamageType type, double damage) {
-        internal.attackEntityFrom(type.internal.setDamageBypassesArmor(), (float) damage);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     protected void createExplosion(Vec3d pos, float size, boolean damageTerrain) {
-        Explosion explosion = new Explosion(getWorld().internal, this.internal, pos.x, pos.y, pos.z, size, false, damageTerrain);
-        if (net.minecraftforge.event.ForgeEventFactory.onExplosionStart(getWorld().internal, explosion)) return;
-        explosion.doExplosionA();
-        explosion.doExplosionB(true);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Non persistent ID.  Should use UUID instead */
     public int getId() {
-        return internal.getEntityId();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 }

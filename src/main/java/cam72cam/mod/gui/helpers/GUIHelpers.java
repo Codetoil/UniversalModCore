@@ -1,10 +1,10 @@
 package cam72cam.mod.gui.helpers;
 
 import cam72cam.mod.MinecraftClient;
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import cam72cam.mod.fluid.Fluid;
 import cam72cam.mod.item.ItemStack;
-import cam72cam.mod.text.PlayerMessage;
+import cam72cam.mod.text.IPlayerMessage;
 import cam72cam.mod.util.With;
 import cam72cam.mod.render.opengl.BlendMode;
 import cam72cam.mod.render.opengl.RenderContext;
@@ -193,9 +193,9 @@ public class GUIHelpers {
         if (Minecraft.getMinecraft().currentScreen != null) {
             Minecraft.getMinecraft().currentScreen.handleComponentClick(component);
         } else {
-            ModCore.error("Trying to open a link outside a screen: %s", url);
+            UMC.error("Trying to open a link outside a screen: %s", url);
             if (MinecraftClient.isReady() && MinecraftClient.getPlayer() != null) {
-                MinecraftClient.getPlayer().sendMessage(PlayerMessage.url(url));
+                MinecraftClient.getPlayer().sendMessage(IPlayerMessage.url(url));
             }
         }
     }
@@ -207,9 +207,9 @@ public class GUIHelpers {
         if (Minecraft.getMinecraft().currentScreen != null) {
             Minecraft.getMinecraft().currentScreen.handleComponentClick(component);
         } else {
-            ModCore.error("Trying to open a file outside a screen: %s", path);
+            UMC.error("Trying to open a file outside a screen: %s", path);
             if (MinecraftClient.isReady() && MinecraftClient.getPlayer() != null) {
-                MinecraftClient.getPlayer().sendMessage(PlayerMessage.direct("Please check this location on your computer: " + path));
+                MinecraftClient.getPlayer().sendMessage(IPlayerMessage.direct("Please check this location on your computer: " + path));
             }
         }
     }
@@ -228,7 +228,7 @@ public class GUIHelpers {
                         .drawHoveringText(content, x, y, width, height, -1, Minecraft.getMinecraft().fontRenderer);
             });
         } else {
-            ModCore.error("Trying to call drawTooltipAtCursor outside any IScreen.draw(), which isn't allowed!");
+            UMC.error("Trying to call drawTooltipAtCursor outside any IScreen.draw(), which isn't allowed!");
         }
     }
 
@@ -242,7 +242,7 @@ public class GUIHelpers {
         if (!delayedRenderFunctions.isEmpty()) {
             delayedRenderFunctions.pop().values().forEach(consumer -> consumer.accept(mouseX, mouseY));
         } else {
-            ModCore.error("Trying to call runDelayed without initialized state!");
+            UMC.error("Trying to call runDelayed without initialized state!");
         }
     }
 }

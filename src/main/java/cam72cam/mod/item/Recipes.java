@@ -1,7 +1,6 @@
 package cam72cam.mod.item;
 
-import cam72cam.mod.ModCore;
-import cam72cam.mod.event.CommonEvents;
+import cam72cam.mod.UMC;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
@@ -55,7 +54,7 @@ public class Recipes {
                         primer.input.set(i, new OreIngredient(ingredients[i].toString()));
                     }
                 }
-                ShapedOreRecipe sor = new ShapedOreRecipe(new ResourceLocation(ModCore.MODID, "recipes"), item.internal, primer);
+                ShapedOreRecipe sor = new ShapedOreRecipe(new ResourceLocation(UMC.MODID, "recipes"), item.internal, primer);
                 sor.setRegistryName(item.internal.getItem().getRegistryName());
                 ForgeRegistries.RECIPES.register(sor);
             });

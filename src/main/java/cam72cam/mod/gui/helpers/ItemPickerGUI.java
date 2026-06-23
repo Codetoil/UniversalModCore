@@ -1,6 +1,5 @@
 package cam72cam.mod.gui.helpers;
 
-import cam72cam.mod.gui.screen.TextField;
 import cam72cam.mod.item.ItemStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;

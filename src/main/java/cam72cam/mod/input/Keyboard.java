@@ -1,6 +1,5 @@
 package cam72cam.mod.input;
 
-import cam72cam.mod.event.ClientEvents;
 import it.unimi.dsi.fastutil.ints.Int2ObjectArrayMap;
 import net.minecraft.client.settings.KeyBinding;
 import net.minecraftforge.fml.client.registry.ClientRegistry;

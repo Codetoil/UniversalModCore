@@ -1,10 +1,9 @@
 package cam72cam.mod.serialization;
 
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import cam72cam.mod.resource.Identifier;
 import cam72cam.mod.resource.Identifier.InputStreamMod;
 import cam72cam.mod.util.ThrowingFunction;
-import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import com.google.common.hash.HashingInputStream;
@@ -61,7 +60,7 @@ public class ResourceCache<T> {
                     }
                 }
             } catch (RuntimeException ex) {
-                ModCore.catching(ex);
+                UMC.catching(ex);
                 return null;
             }
             return null;
@@ -112,7 +111,7 @@ public class ResourceCache<T> {
     private final ThrowingFunction<ResourceProvider, T, IOException> constructor;
 
     public ResourceCache(Identifier id, ThrowingFunction<ResourceProvider, T, IOException> constructor) throws IOException {
-        dir = ModCore.cacheFile(id);
+        dir = UMC.cacheFile(id);
         dir.mkdirs();
         meta = new File(dir, "meta.nbt");
         this.constructor = constructor;
@@ -140,7 +139,7 @@ public class ResourceCache<T> {
             // Write the compressed data
             channel.write(ByteBuffer.wrap(output));
         } catch (NullPointerException e) {
-            ModCore.error("Hit an exception while compressing cache data!  If you are using Java OpenJ9, please use a different JVM as there are known memory corruption bugs.");
+            UMC.error("Hit an exception while compressing cache data!  If you are using Java OpenJ9, please use a different JVM as there are known memory corruption bugs.");
             throw e;
         }
     }

@@ -1,7 +1,7 @@
 package cam72cam.mod.model.obj;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import cam72cam.mod.resource.Identifier;
 import cam72cam.mod.serialization.ResourceCache;
 
@@ -55,7 +55,7 @@ public class OBJBuilder {
             if (materialName != null) {
                 Material material = materialLookup.get(materialName);
                 if (material == null) {
-                    ModCore.warn("Unknown material '%s' in %s", materialName, modelLoc);
+                    UMC.warn("Unknown material '%s' in %s", materialName, modelLoc);
                     colorOffset += vbo.stride * 3;
                     textureOffset += vbo.stride * 3;
                     continue;
@@ -140,7 +140,7 @@ public class OBJBuilder {
         }
         this.textureWidth = packer.getWidth();
         this.textureHeight = packer.getHeight();
-        ModCore.debug("Building %s took %sms", modelLoc, (System.currentTimeMillis() - start));
+        UMC.debug("Building %s took %sms", modelLoc, (System.currentTimeMillis() - start));
     }
 
     public VertexBuffer vertexBufferObject() {

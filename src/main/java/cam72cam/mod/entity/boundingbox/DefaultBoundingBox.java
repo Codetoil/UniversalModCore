@@ -1,81 +1,62 @@
 package cam72cam.mod.entity.boundingbox;
 
 import cam72cam.mod.math.Vec3d;
-import net.minecraft.util.math.AxisAlignedBB;
 
 /** Default implementation of IBoundingBox, do not use directly! */
 public class DefaultBoundingBox implements IBoundingBox {
-    public final AxisAlignedBB internal;
-    private Vec3d minCached;
-    private Vec3d centerCached;
-    private Vec3d maxCached;
-
-    public DefaultBoundingBox(AxisAlignedBB internal) {
-        this.internal = internal;
-    }
-
     @Override
     public Vec3d min() {
-        if (minCached == null) {
-            minCached = new Vec3d(internal.minX, internal.minY, internal.minZ);
-        }
-        return minCached;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public Vec3d center() {
-        if (centerCached == null) {
-            centerCached = new Vec3d(internal.getCenter());
-        }
-        return centerCached;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public Vec3d max() {
-        if (maxCached == null) {
-            maxCached = new Vec3d(internal.maxX, internal.maxY, internal.maxZ);
-        }
-        return maxCached;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public IBoundingBox expand(Vec3d centered) {
-        return IBoundingBox.from(internal.expand(centered.x, centered.y, centered.z));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public IBoundingBox contract(Vec3d centered) {
-        return IBoundingBox.from(internal.contract(centered.x, centered.y, centered.z));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public IBoundingBox grow(Vec3d val) {
-        return IBoundingBox.from(internal.grow(val.x, val.y, val.z));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public IBoundingBox offset(Vec3d vec3d) {
-        return IBoundingBox.from(internal.offset(vec3d.internal()));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public double calculateXOffset(IBoundingBox other, double offsetX) {
-        return internal.calculateXOffset(BoundingBox.from(other), offsetX);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public double calculateYOffset(IBoundingBox other, double offsetY) {
-        return internal.calculateYOffset(BoundingBox.from(other), offsetY);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public double calculateZOffset(IBoundingBox other, double offsetZ) {
-        return internal.calculateZOffset(BoundingBox.from(other), offsetZ);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public boolean intersects(Vec3d min, Vec3d max) {
-        return internal.intersects(min.x, min.y, min.z, max.x, max.y, max.z);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
@@ -91,11 +72,11 @@ public class DefaultBoundingBox implements IBoundingBox {
 
     @Override
     public boolean intersectsSegment(Vec3d startVec, Vec3d endVec) {
-        return internal.calculateIntercept(startVec.internal(), endVec.internal()) != null;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public boolean contains(Vec3d vec) {
-        return internal.contains(vec.internal());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 }

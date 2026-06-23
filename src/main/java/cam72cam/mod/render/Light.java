@@ -1,7 +1,6 @@
 package cam72cam.mod.render;
 
-import cam72cam.mod.ModCore;
-import cam72cam.mod.event.CommonEvents;
+import cam72cam.mod.UMC;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.world.World;
 import net.minecraft.entity.Entity;
@@ -81,21 +80,21 @@ public class Light {
 
     public static void register() {
         CommonEvents.Entity.REGISTER.subscribe(() -> {
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light1"), LightEntity1.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light2"), LightEntity2.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light3"), LightEntity3.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light4"), LightEntity4.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light5"), LightEntity5.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light6"), LightEntity6.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light7"), LightEntity7.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light8"), LightEntity8.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light9"), LightEntity9.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light10"), LightEntity10.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light11"), LightEntity11.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light12"), LightEntity12.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light13"), LightEntity13.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light14"), LightEntity14.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light15"), LightEntity15.class, "LightEntity", -1, ModCore.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light1"), LightEntity1.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light2"), LightEntity2.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light3"), LightEntity3.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light4"), LightEntity4.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light5"), LightEntity5.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light6"), LightEntity6.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light7"), LightEntity7.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light8"), LightEntity8.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light9"), LightEntity9.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light10"), LightEntity10.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light11"), LightEntity11.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light12"), LightEntity12.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light13"), LightEntity13.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light14"), LightEntity14.class, "LightEntity", -1, UMC.instance, 0, 0, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(new ResourceLocation("universalmodcore:light15"), LightEntity15.class, "LightEntity", -1, UMC.instance, 0, 0, false);
         });
     }
 

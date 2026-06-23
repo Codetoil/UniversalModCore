@@ -7,8 +7,6 @@ import cam72cam.mod.item.ItemStack;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.world.World;
-import net.minecraft.nbt.CompressedStreamTools;
-import net.minecraft.nbt.NBTTagCompound;
 
 import java.io.*;
 import java.util.*;
@@ -142,9 +140,9 @@ public class TagCompound {
     public TagCompound setVec3i(String key, Vec3i pos) {
         return setter(key, pos, () -> {
             NBTTagCompound tag = new NBTTagCompound();
-            tag.setInteger("X", pos.x);
-            tag.setInteger("Y", pos.y);
-            tag.setInteger("Z", pos.z);
+            tag.setInteger("X", pos.x());
+            tag.setInteger("Y", pos.y());
+            tag.setInteger("Z", pos.z());
             internal.setTag(key, tag);
         });
     }
@@ -166,11 +164,11 @@ public class TagCompound {
         });
     }
 
-    public cam72cam.mod.entity.Entity getEntity(String key, World world) {
-        return getEntity(key, world, cam72cam.mod.entity.Entity.class);
+    public Entity getEntity(String key, World world) {
+        return getEntity(key, world, Entity.class);
     }
 
-    public <T extends cam72cam.mod.entity.Entity> T getEntity(String key, World world, Class<T> cls) {
+    public <T extends Entity> T getEntity(String key, World world, Class<T> cls) {
         return getter(key, () -> {
             TagCompound data = get(key);
             UUID id = data.getUUID("id");

@@ -42,7 +42,7 @@ public class StandardModel {
     private final List<RenderFunction> custom = new ArrayList<>();
 
     /** Hacky way to turn an item into a blockstate, probably has some weird edge cases */
-    private static IBlockState itemToBlockState(cam72cam.mod.item.ItemStack stack) {
+    private static IBlockState itemToBlockState(ItemStack stack) {
         Block block = Block.getBlockFromItem(stack.internal.getItem());
         @SuppressWarnings("deprecation")
         IBlockState gravelState = block.getStateFromMeta(stack.internal.getMetadata());

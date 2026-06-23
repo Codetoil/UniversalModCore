@@ -1,7 +1,5 @@
 package cam72cam.mod.item;
 
-import net.minecraft.creativetab.CreativeTabs;
-
 import java.util.function.Supplier;
 
 /** Creates/Registers a creative tab for custom items */

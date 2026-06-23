@@ -2,11 +2,10 @@ package cam72cam.mod.math;
 
 /** Custom Vec3d that is equivalent to MC's Vec3d */
 public class Vec3d {
-    public static final Vec3d ZERO = new Vec3d(net.minecraft.util.math.Vec3d.ZERO);
+    public static final Vec3d ZERO = new Vec3d(0, 0, 0);
     public final double x;
     public final double y;
     public final double z;
-    private net.minecraft.util.math.Vec3d internal = null;
 
     public Vec3d(double x, double y, double z) {
         this.x = x;
@@ -14,13 +13,8 @@ public class Vec3d {
         this.z = z;
     }
 
-    public Vec3d(net.minecraft.util.math.Vec3d internal) {
-        this(internal.x, internal.y, internal.z);
-        this.internal = internal;
-    }
-
     public Vec3d(Vec3i pos) {
-        this(pos.x, pos.y, pos.z);
+        this(pos.x(), pos.y(), pos.z());
     }
 
     public Vec3d add(double x, double y, double z) {
@@ -28,7 +22,7 @@ public class Vec3d {
     }
 
     public Vec3d add(Vec3i offset) {
-        return add(offset.x, offset.y, offset.z);
+        return add(offset.x(), offset.y(), offset.z());
     }
 
     public Vec3d add(Vec3d other) {
@@ -40,7 +34,7 @@ public class Vec3d {
     }
 
     public Vec3d subtract(Vec3i offset) {
-        return subtract(offset.x, offset.y, offset.z);
+        return subtract(offset.x(), offset.y(), offset.z());
     }
 
     public Vec3d subtract(double x, double y, double z) {
@@ -124,12 +118,5 @@ public class Vec3d {
     @Override
     public int hashCode() {
         return (int) (x + y + z);
-    }
-
-    public net.minecraft.util.math.Vec3d internal() {
-        if (internal == null) {
-            internal = new net.minecraft.util.math.Vec3d(x, y, z);
-        }
-        return internal;
     }
 }

@@ -1,8 +1,7 @@
 package cam72cam.mod.render.opengl;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
-import cam72cam.mod.event.ClientEvents;
+import cam72cam.mod.UMC;
 import cam72cam.mod.util.With;
 import org.lwjgl.opengl.GL11;
 import org.lwjgl.opengl.GL12;
@@ -42,7 +41,7 @@ public abstract class CustomTexture implements Texture {
                     }
                 }
             } catch (Exception ex) {
-                ModCore.catching(ex);
+                UMC.catching(ex);
             }
         });
     }

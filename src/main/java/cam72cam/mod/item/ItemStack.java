@@ -2,9 +2,6 @@ package cam72cam.mod.item;
 
 import cam72cam.mod.entity.Player;
 import cam72cam.mod.serialization.TagCompound;
-import net.minecraft.item.Item;
-import net.minecraft.tileentity.TileEntityFurnace;
-import net.minecraftforge.fluids.FluidUtil;
 
 /** Wrapper around Minecraft ItemStack (Item, count, NBT) */
 public class ItemStack {

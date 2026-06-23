@@ -1,7 +1,5 @@
 package cam72cam.mod.item;
 
-import net.minecraftforge.items.IItemHandlerModifiable;
-
 public interface IInventory {
     /** Wraps MC construct.  Do not use */
     static IInventory from(IItemHandlerModifiable inv) {

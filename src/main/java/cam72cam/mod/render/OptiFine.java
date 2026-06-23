@@ -5,7 +5,6 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.settings.GameSettings;
 import org.lwjgl.opengl.ARBShaderObjects;
 
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 
 public class OptiFine {

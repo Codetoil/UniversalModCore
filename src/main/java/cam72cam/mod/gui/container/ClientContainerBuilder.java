@@ -9,43 +9,14 @@ import cam72cam.mod.render.opengl.RenderContext;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.render.opengl.Texture;
 import cam72cam.mod.resource.Identifier;
-import net.minecraft.client.gui.Gui;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.client.renderer.texture.TextureAtlasSprite;
-import net.minecraft.client.renderer.texture.TextureMap;
 
 import java.util.function.Supplier;
 
-import static cam72cam.mod.gui.helpers.GUIHelpers.CHEST_GUI_TEXTURE;
-
 /** GUI Container wrapper for the client side, Do not use directly */
-public class ClientContainerBuilder extends GuiContainer implements IContainerBuilder {
-    private static final int slotSize = 18;
-    private static final int topOffset = 17;
-    private static final int bottomOffset = 7;
-    private static final int textureHeight = 222;
-    private static final int paddingRight = 7;
-    private static final int paddingLeft = 7;
-    private static final int stdUiHorizSlots = 9;
-    private static final int playerXSize = paddingRight + stdUiHorizSlots * slotSize + paddingLeft;
-    private static final int midBarOffset = 4;
-    private static final int midBarHeight = 4;
-    private final ServerContainerBuilder server;
-    private final Supplier<Boolean> valid;
-    private int centerX;
-    private int centerY;
-
-    private static final RenderState CHEST_TEXTURE = new RenderState().color(1, 1, 1, 1)
-                                                                      .texture(Texture.wrap(CHEST_GUI_TEXTURE))
-                                                                      .stage(RenderContext.Stage.GUI);
+public class ClientContainerBuilder implements IContainerBuilder {
 
     public ClientContainerBuilder(ServerContainerBuilder serverContainer, Supplier<Boolean> valid) {
-        super(serverContainer);
-        this.server = serverContainer;
-        this.xSize = paddingRight + serverContainer.slotsX * slotSize + paddingLeft;
-        this.ySize = server.ySize;
-        this.valid = valid;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override

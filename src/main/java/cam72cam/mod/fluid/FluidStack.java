@@ -2,28 +2,16 @@ package cam72cam.mod.fluid;
 
 /** Wrapper around forge FluidStack */
 public class FluidStack {
-    public final net.minecraftforge.fluids.FluidStack internal;
-
-    /** Wrapper, don't use directly */
-    public FluidStack(net.minecraftforge.fluids.FluidStack stack) {
-        this.internal = stack;
-    }
 
     public FluidStack(Fluid fluid, int amount) {
-        this.internal = fluid != null && fluid.internal != null ? new net.minecraftforge.fluids.FluidStack(fluid.internal, amount) : null;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public Fluid getFluid() {
-        if (internal == null) {
-            return null;
-        }
-        return Fluid.getFluid(internal.getFluid().getName());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public int getAmount() {
-        if (internal == null) {
-            return 0;
-        }
-        return internal.amount;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 }

@@ -1,8 +1,5 @@
 package cam72cam.mod.resource;
 
-import net.minecraft.util.ResourceLocation;
-import org.apache.commons.io.FilenameUtils;
-
 import java.io.FilterInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,45 +7,38 @@ import java.util.List;
 
 /** Pair(domain, path).  Used to reference registry entries and resource pack contents alike */
 public class Identifier {
-    /** MC Construct, do not use directly */
-    public final ResourceLocation internal;
-
-    /** Wrap MC Construct, do not use directly */
-    public Identifier(ResourceLocation internal) {
-        this.internal = internal;
-    }
 
     /** Parse identifier from string (domain:path) */
     public Identifier(String ident) {
-        this(new ResourceLocation(ident));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Standard constructor */
     public Identifier(String domain, String path) {
-        this(new ResourceLocation(domain, path));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public String toString() {
-        return internal.toString();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public int hashCode() {
-        return internal.hashCode();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public boolean equals(Object o) {
-        return o instanceof Identifier && internal.equals(((Identifier) o).internal);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public String getDomain() {
-        return internal.getNamespace();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public String getPath() {
-        return internal.getPath();
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /**
@@ -60,7 +50,7 @@ public class Identifier {
      * returns domain:some/path/other.file
      */
     public Identifier getRelative(String path) {
-        return new Identifier(getDomain(), FilenameUtils.concat(FilenameUtils.getPath(getPath()), path).replace('\\', '/'));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /**

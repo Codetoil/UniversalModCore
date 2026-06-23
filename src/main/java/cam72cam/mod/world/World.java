@@ -1,17 +1,15 @@
 package cam72cam.mod.world;
 
 import cam72cam.mod.MinecraftClient;
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
+import cam72cam.mod.entity.*;
+import cam72cam.umc.api.entity.*;
 import cam72cam.mod.block.BlockEntity;
 import cam72cam.mod.block.BlockType;
 import cam72cam.mod.block.IBlockTypeBlock;
 import cam72cam.mod.block.tile.TileEntity;
-import cam72cam.mod.entity.*;
 import cam72cam.mod.entity.boundingbox.BoundingBox;
-import cam72cam.mod.entity.boundingbox.DefaultBoundingBox;
 import cam72cam.mod.entity.boundingbox.IBoundingBox;
-import cam72cam.mod.event.ClientEvents;
-import cam72cam.mod.event.CommonEvents;
 import cam72cam.mod.fluid.ITank;
 import cam72cam.mod.item.IInventory;
 import cam72cam.mod.item.ItemStack;
@@ -19,97 +17,27 @@ import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.util.Facing;
 import cam72cam.mod.serialization.TagCompound;
-import net.minecraft.block.*;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.client.network.NetHandlerPlayClient;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.item.EntityItem;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.init.Blocks;
-import net.minecraft.util.EnumFacing;
-import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.world.EnumSkyBlock;
-import net.minecraft.world.chunk.Chunk;
-import net.minecraftforge.common.IPlantable;
-import net.minecraftforge.fluids.capability.CapabilityFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.items.CapabilityItemHandler;
-import net.minecraftforge.items.IItemHandler;
-import net.minecraftforge.items.IItemHandlerModifiable;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentLinkedDeque;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 /** Wraps both ClientWorld and ServerWorld */
 public class World {
-
-    /* Static access to loaded worlds */
-    private static final Map<Integer, World> clientWorlds = new HashMap<>();
-    private static final Map<Integer, World> serverWorlds = new HashMap<>();
-    private static final Queue<Consumer<World>> onTicks = new ConcurrentLinkedDeque<>();
-
-    /** Internal, do not use */
-    public final net.minecraft.world.World internal;
     /** isClient == world.isRemote */
     public final boolean isClient;
     /** isServer != world.isRemote */
     public final boolean isServer;
 
-    private final Map<Integer, Entity> entityByID = new HashMap<>();
-    private final Map<UUID, Entity> entityByUUID = new HashMap<>();
-    private final Map<Class<?>, List<Entity>> entitiesByClass = new HashMap<>();
-
     public final WorldEntityTracker tracker = new WorldEntityTracker();
 
     /* World Initialization */
 
-    private World(net.minecraft.world.World world) {
-        internal = world;
-        isClient = world.isRemote;
-        isServer = !world.isRemote;
-    }
-
-    /** Helper function to get a world map (client or server) */
-    private static Map<Integer, World> getWorldMap(net.minecraft.world.World world) {
-        return world.isRemote ? clientWorlds : serverWorlds;
-    }
-    /** Helper function to get a world in it's respective map */
-    private static World getWorld(net.minecraft.world.World world){
-        return getWorldMap(world).get(world.provider.getDimension());
-    }
-
-    /** Load world hander, sets up maps and internal handlers */
-    private static void loadWorld(net.minecraft.world.World world) {
-        //HACK for fake world created by other mods
-        if(world.isRemote && world instanceof WorldClient
-                && (((WorldClient) world).connection == null
-                    || ((WorldClient)world).connection.getClass() != NetHandlerPlayClient.class)){ //Essentials use their own fakeNetHandler
-            //Meaning it is a "fake world" created by other mods for rendering
-            return;
-        }
-
-        if (getWorld(world) == null) {
-            World worldWrap = new World(world);
-            getWorldMap(world).put(worldWrap.getId(), worldWrap);
-            world.addEventListener(new WorldEventListener(worldWrap));
-        }
-    }
-
     /** Called from Event system, wires into common world events */
     public static void registerEvents() {
-        CommonEvents.World.LOAD.subscribe(World::loadWorld);
 
-        CommonEvents.World.UNLOAD.subscribe(world -> getWorldMap(world).remove(world.provider.getDimension()));
-
-        CommonEvents.World.TICK.subscribe(world -> onTicks.forEach(fn -> fn.accept(get(world))));
-
-        CommonEvents.World.TICK.subscribe(world -> get(world).checkLoadedEntities());
+        CommonEvents.World.TICK.subscribe(world -> world.checkLoadedEntities());
     }
 
     public static void registerClientEvnets() {
@@ -125,11 +53,11 @@ public class World {
         if (this.getTicks() % 20 == 0) {
             for (net.minecraft.entity.Entity entity : this.internal.loadedEntityList) {
                 if (!this.entityByID.containsKey(entity.getEntityId())) {
-                    ModCore.warn("Adding entity that was not wrapped correctly %s - %s", entity.getUniqueID(), entity);
+                    UMC.warn("Adding entity that was not wrapped correctly %s - %s", entity.getUniqueID(), entity);
                     if (entity instanceof EntityPlayerMP && !this.internal.playerEntities.contains(entity)) {
                         // if player is no longer online then remove player from loadedEntityList
                         this.internal.loadedEntityList.remove(entity);
-                        ModCore.warn("Removing entity with uuid %s from loadedEntityList", entity.getUniqueID());
+                        UMC.warn("Removing entity with uuid %s from loadedEntityList", entity.getUniqueID());
                         return;
                     }
                     this.onEntityAdded(entity);
@@ -139,7 +67,7 @@ public class World {
                 if (this.internal.getEntityByID(entityId) == null) {
                     Entity entity = this.entityByID.get(entityId);
                     if (entity != null && !this.internal.loadedEntityList.contains(entity.internal)) {
-                        ModCore.warn("Dropping entity that was not removed correctly %s - %s", entity.getUUID(), entity);
+                        UMC.warn("Dropping entity that was not removed correctly %s - %s", entity.getUUID(), entity);
                         this.onEntityRemoved(entity.internal);
                     }
                 }
@@ -197,7 +125,7 @@ public class World {
         } else if (entityIn instanceof EntityLiving) {
             entity = new Living((EntityLiving) entityIn);
         } else if (entityIn instanceof EntityItem) {
-            entity = new cam72cam.mod.entity.ItemEntity((EntityItem) entityIn);
+            entity = new ItemEntity((EntityItem) entityIn);
         } else {
             entity = new Entity(entityIn);
         }
@@ -213,7 +141,7 @@ public class World {
      */
     void onEntityRemoved(net.minecraft.entity.Entity entity) {
         if(entity == null) {
-            ModCore.warn("Somehow removed a null entity?");
+            UMC.warn("Somehow removed a null entity?");
             return;
         }
         for (List<Entity> value : entitiesByClass.values()) {
@@ -240,7 +168,7 @@ public class World {
             return null;
         }
         if (!type.isInstance(ent)) {
-            ModCore.warn("When looking for entity %s by id %s, we instead got a %s", type, id, ent.getClass());
+            UMC.warn("When looking for entity %s by id %s, we instead got a %s", type, id, ent.getClass());
             return null;
         }
         return (T) ent;
@@ -253,7 +181,7 @@ public class World {
             return null;
         }
         if (!type.isInstance(ent)) {
-            ModCore.warn("When looking for entity %s by id %s, we instead got a %s", type, id, ent.getClass());
+            UMC.warn("When looking for entity %s by id %s, we instead got a %s", type, id, ent.getClass());
             return null;
         }
         return (T) ent;
@@ -297,17 +225,7 @@ public class World {
      * More performant when region is known
      * */
     public <T extends Entity> List<T> getEntitiesWithinBB(IBoundingBox bb , Predicate<T> filter, Class<T> type) {
-        List<net.minecraft.entity.Entity> entitiesWithinAABB = internal.getEntitiesWithinAABB(net.minecraft.entity.Entity.class,
-                                    bb instanceof DefaultBoundingBox
-                                    ? ((DefaultBoundingBox)bb).internal
-                                    : new AxisAlignedBB(bb.min().x, bb.min().y, bb.min().z, bb.max().x, bb.max().y, bb.max().z));
-
-        return entitiesWithinAABB.stream()
-                                 .map(this::getEntity)
-                                 .filter(type::isInstance)
-                                 .map(type::cast)
-                                 .filter(filter)
-                                 .collect(Collectors.toList());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Add a constructed entity to the world */
@@ -326,25 +244,18 @@ public class World {
     }
 
     /** Internal, do not use */
-    public <T extends net.minecraft.tileentity.TileEntity> T getTileEntity(Vec3i pos, Class<T> cls) {
+    public <T> T getTileEntity(Vec3i pos, Class<T> cls) {
         return getTileEntity(pos, cls, true);
     }
 
     /** Internal, do not use */
-    public <T extends net.minecraft.tileentity.TileEntity> T getTileEntity(Vec3i pos, Class<T> cls, boolean create) {
-        net.minecraft.tileentity.TileEntity ent = internal.getChunk(pos.internal()).getTileEntity(pos.internal(), create ? Chunk.EnumCreateEntityType.IMMEDIATE : Chunk.EnumCreateEntityType.CHECK);
-        if (cls.isInstance(ent)) {
-            return (T) ent;
-        }
-        return null;
+    public <T> T getTileEntity(Vec3i pos, Class<T> cls, boolean create) {
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Get all block entities of the given type */
     public <T extends BlockEntity> List<T> getBlockEntities(Class<T> cls) {
-        return internal.loadedTileEntityList.stream()
-                .filter(x -> x instanceof TileEntity && ((TileEntity) x).isLoaded() && cls.isInstance(((TileEntity) x).instance()))
-                .map(x -> (T) ((TileEntity) x).instance())
-                .collect(Collectors.toList());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Get a block entity at the position, assuming type */
@@ -377,11 +288,11 @@ public class World {
     public BlockEntity reconstituteBlockEntity(TagCompound data) {
         TileEntity te = (TileEntity) TileEntity.create(internal, data.internal);
         if (te == null) {
-            ModCore.warn("BAD TE DATA " + data);
+            UMC.warn("BAD TE DATA " + data);
             return null;
         }
         if (te.instance() == null) {
-            ModCore.warn("Loaded " + te.isLoaded() + " " + data);
+            UMC.warn("Loaded " + te.isLoaded() + " " + data);
         }
         return te.instance();
     }

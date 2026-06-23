@@ -1,13 +1,6 @@
 package cam72cam.mod.item;
 
 import cam72cam.mod.config.ConfigFile;
-import cam72cam.mod.event.CommonEvents;
-import net.minecraft.block.Block;
-import net.minecraft.init.Blocks;
-import net.minecraft.init.Items;
-import net.minecraft.item.Item;
-import net.minecraft.util.NonNullList;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
 import java.util.stream.Collectors;

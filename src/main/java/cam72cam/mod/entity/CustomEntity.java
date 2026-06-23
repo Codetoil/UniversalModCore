@@ -1,9 +1,6 @@
 package cam72cam.mod.entity;
 
 import cam72cam.mod.entity.sync.EntitySync;
-import cam72cam.mod.world.World;
-import net.minecraft.network.datasync.EntityDataManager;
-import net.minecraft.util.math.MathHelper;
 
 import java.util.List;
 
@@ -21,8 +18,7 @@ public class CustomEntity extends Entity {
 
     /** Do not use directly.  Construct via world on ModdedEntity load */
     protected CustomEntity() {
-        super(null);
-        this.sync = new EntitySync(this);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public boolean isImmuneToFire() {
@@ -51,9 +47,7 @@ public class CustomEntity extends Entity {
      * @see EntityRegistry#create 
      */
     CustomEntity setup(ModdedEntity entity) {
-        super.internal = entity;
-        this.internal = entity;
-        return this;
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Allow entities to refuse to load.  If a non-null value is passed we error out */
@@ -67,17 +61,12 @@ public class CustomEntity extends Entity {
     }
 
     @Override
-    public void addPassenger(cam72cam.mod.entity.Entity passenger) {
-        if (passenger.getRiding() instanceof CustomEntity) {
-            // If they are already riding a custom passenger, don't fire the dismount handler directly
-            ((ModdedEntity)passenger.getRiding().internal).moveRiderTo(passenger, this);
-        } else {
-            super.addPassenger(passenger);
-        }
+    public void addPassenger(Entity passenger) {
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
-    public boolean isPassenger(cam72cam.mod.entity.Entity passenger) {
+    public boolean isPassenger(Entity passenger) {
         return internal.isPassenger(passenger);
     }
 
@@ -93,31 +82,20 @@ public class CustomEntity extends Entity {
 
     @Override
     public float getRotationRoll() {
-        return internal.getDataManager().get(ModdedEntity.ROLL);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public float getRotationRoll(float partialTicks) {
-        return (float) MathHelper.clampedLerp(getPrevRotationRoll(), getRotationRoll(), partialTicks);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     @Override
     public void setRotationRoll(float roll) {
-        EntityDataManager dataManager = internal.getDataManager();
-        float prevRoll = dataManager.get(ModdedEntity.PREV_ROLL);
-        while (roll - prevRoll < -180.0F)
-        {
-            prevRoll -= 360.0F;
-        }
-        while (roll - prevRoll >= 180.0F)
-        {
-            prevRoll += 360.0F;
-        }
-        dataManager.set(ModdedEntity.PREV_ROLL, prevRoll);
-        dataManager.set(ModdedEntity.ROLL, roll);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public float getPrevRotationRoll() {
-        return internal.getDataManager().get(ModdedEntity.PREV_ROLL);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 }

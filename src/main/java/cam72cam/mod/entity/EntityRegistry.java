@@ -1,11 +1,8 @@
 package cam72cam.mod.entity;
 
-import cam72cam.mod.ModCore;
-import cam72cam.mod.event.ClientEvents;
-import cam72cam.mod.event.CommonEvents;
-import cam72cam.mod.resource.Identifier;
+import cam72cam.mod.UMC;
 import cam72cam.mod.serialization.TagCompound;
-import cam72cam.mod.text.PlayerMessage;
+import cam72cam.mod.text.IPlayerMessage;
 import cam72cam.mod.world.World;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiDisconnected;
@@ -28,20 +25,9 @@ public class EntityRegistry {
 
     }
 
-    public static void register(ModCore.Mod mod, Supplier<CustomEntity> ctr, int distance) {
+    public static void register(UMC.Mod mod, Supplier<CustomEntity> ctr, int distance) {
         CustomEntity tmp = ctr.get();
         Class<? extends CustomEntity> type = tmp.getClass();
-
-        CommonEvents.Entity.REGISTER.subscribe(() -> {
-            Identifier id = new Identifier(mod.modID(), type.getSimpleName());
-
-            // This has back-compat for older entity names
-            // TODO expose updateFreq and vecUpdates
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(id.internal, ModdedEntity.class, type.getSimpleName(), constructors.size(), ModCore.instance, distance, 20, false);
-
-            identifiers.put(type, id.toString());
-            constructors.put(id.toString(), ctr);
-        });
     }
 
     public static Supplier<CustomEntity> getConstructor(String type) {
@@ -63,7 +49,7 @@ public class EntityRegistry {
 
     public static void registerEvents() {
         CommonEvents.Entity.REGISTER.subscribe(() -> {
-            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(SeatEntity.ID, SeatEntity.class, SeatEntity.class.getSimpleName(), constructors.size()+1, ModCore.instance, 512, 20, false);
+            net.minecraftforge.fml.common.registry.EntityRegistry.registerModEntity(SeatEntity.ID, SeatEntity.class, SeatEntity.class.getSimpleName(), constructors.size()+1, UMC.instance, 512, 20, false);
         });
 
         CommonEvents.Entity.JOIN.subscribe((world, entity) -> {
@@ -85,10 +71,10 @@ public class EntityRegistry {
     public static void registerClientEvents() {
         ClientEvents.TICK.subscribe(() -> {
             if (missingResources != null && !Minecraft.getMinecraft().isSingleplayer() && Minecraft.getMinecraft().getConnection() != null) {
-                ModCore.error(missingResources);
-                Minecraft.getMinecraft().getConnection().getNetworkManager().closeChannel(PlayerMessage.direct(missingResources).internal);
+                UMC.error(missingResources);
+                Minecraft.getMinecraft().getConnection().getNetworkManager().closeChannel(IPlayerMessage.direct(missingResources).internal);
                 Minecraft.getMinecraft().loadWorld(null);
-                Minecraft.getMinecraft().displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", PlayerMessage.direct(missingResources).internal));
+                Minecraft.getMinecraft().displayGuiScreen(new GuiDisconnected(new GuiMultiplayer(new GuiMainMenu()), "disconnect.lost", IPlayerMessage.direct(missingResources).internal));
                 missingResources = null;
             }
         });

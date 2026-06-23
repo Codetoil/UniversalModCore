@@ -1,13 +1,11 @@
 package cam72cam.mod.model.obj;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import cam72cam.mod.resource.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -85,7 +83,7 @@ public class OBJTexturePacker {
                     this.height = materials.stream().mapToInt(x -> x.copiesV).max().getAsInt() * size.height;
                     this.texture = materials.get(0);
                 } catch (Exception e) {
-                    ModCore.catching(e, "Unable to load image %s", paths.apply(materials.get(0).texKd));
+                    UMC.catching(e, "Unable to load image %s", paths.apply(materials.get(0).texKd));
                 }
             }
         }
@@ -306,7 +304,7 @@ public class OBJTexturePacker {
                     int originalWidth = image.getWidth();
                     int originalHeight = image.getHeight();
                     image = scaleImage(image, Config.getMaxTextureSize());
-                    ModCore.warn("Scaling texture '%s' for %s from (%s x %s) to (%s x %s)", variant, ident, originalWidth, originalHeight, image.getWidth(), image.getHeight());
+                    UMC.warn("Scaling texture '%s' for %s from (%s x %s) to (%s x %s)", variant, ident, originalWidth, originalHeight, image.getWidth(), image.getHeight());
                 }
                 return image;
             });
@@ -320,7 +318,7 @@ public class OBJTexturePacker {
                         int originalWidth = image.getWidth();
                         int originalHeight = image.getHeight();
                         image = scaleImage(image, Config.getMaxTextureSize());
-                        ModCore.warn("Scaling texture '%s' for %s from (%s x %s) to (%s x %s)", variant, ident, originalWidth, originalHeight, image.getWidth(), image.getHeight());
+                        UMC.warn("Scaling texture '%s' for %s from (%s x %s) to (%s x %s)", variant, ident, originalWidth, originalHeight, image.getWidth(), image.getHeight());
                     }
                     return image;
                 });
@@ -335,7 +333,7 @@ public class OBJTexturePacker {
                         int originalWidth = image.getWidth();
                         int originalHeight = image.getHeight();
                         image = scaleImage(image, Config.getMaxTextureSize());
-                        ModCore.warn("Scaling texture '%s' for %s from (%s x %s) to (%s x %s)", variant, ident, originalWidth, originalHeight, image.getWidth(), image.getHeight());
+                        UMC.warn("Scaling texture '%s' for %s from (%s x %s) to (%s x %s)", variant, ident, originalWidth, originalHeight, image.getWidth(), image.getHeight());
                     }
                     return image;
                 });

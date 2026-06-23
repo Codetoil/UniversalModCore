@@ -1,29 +1,21 @@
 package cam72cam.mod.entity;
 
-import net.minecraft.entity.EntityLiving;
-
 /** Wrapper around EntityLiving */
 public class Living extends Entity {
-    private final EntityLiving living;
-
-    public Living(net.minecraft.entity.EntityLiving entity) {
-        super(entity);
-        this.living = entity;
-    }
 
     public boolean isLeashedTo(Player player) {
-        return living.getLeashed() && living.getLeashHolder().getUniqueID().equals(player.getUUID());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public void unleash(Player player) {
-        living.clearLeashed(true, !player.isCreative());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public void setLeashHolder(Player player) {
-        living.setLeashHolder(player.internal, true);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     public boolean canBeLeashedTo(Player player) {
-        return living.canBeLeashedTo(player.internal);
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 }

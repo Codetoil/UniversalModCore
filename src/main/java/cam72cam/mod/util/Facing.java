@@ -1,7 +1,7 @@
 package cam72cam.mod.util;
 
 import cam72cam.mod.math.Rotation;
-import net.minecraft.util.EnumFacing;
+import cam72cam.mod.math.Vec3i;
 
 /**
  * Wrap MC's EnumFacing enum, provide some helpers
@@ -90,17 +90,17 @@ public enum Facing {
         return Axis.from(internal.getAxis());
     }
 
-    /** @see cam72cam.mod.math.Vec3i#offset */
+    /** @see Vec3i#offset */
     public int getXMultiplier() {
         return internal.getXOffset();
     }
 
-    /** @see cam72cam.mod.math.Vec3i#offset */
+    /** @see Vec3i#offset */
     public int getYMultiplier() {
         return internal.getYOffset();
     }
 
-    /** @see cam72cam.mod.math.Vec3i#offset */
+    /** @see Vec3i#offset */
     public int getZMultiplier() {
         return internal.getZOffset();
     }

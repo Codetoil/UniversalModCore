@@ -1,7 +1,5 @@
 package cam72cam.mod.util;
 
-import net.minecraft.util.EnumFacing;
-
 /**
  * Wrap MC's Axis construct
  */

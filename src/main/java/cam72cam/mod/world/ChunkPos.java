@@ -1,37 +1,10 @@
 package cam72cam.mod.world;
 
-import net.minecraft.entity.Entity;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.math.Vec3d;
-import net.minecraft.world.World;
-import net.minecraft.world.chunk.Chunk;
-
-public class ChunkPos {
-    public final int dim;
-    public final int chunkX;
-    public final int chunkZ;
-
-    public ChunkPos(World world, BlockPos pos) {
-        dim = world.provider.getDimension();
-        Chunk chunk = world.getChunk(pos);
-        chunkX = chunk.x;
-        chunkZ = chunk.z;
-    }
-
-    public ChunkPos(Entity entity) {
-        this(entity.getEntityWorld(), entity.getPosition());
-    }
-
-    public ChunkPos(World world, Integer cx, Integer cz) {
-        dim = world.provider.getDimension();
-        chunkX = cx;
-        chunkZ = cz;
-    }
+public abstract class ChunkPos {
 
     //Minecraft(1.17+) way of storing ChunkPos, added Y axis than 1.12 ChunkPos
     //Backported for unified storaging way
-    //Don't mix this up with net.minecraft.util.math.ChunkPos
+    //Don't mix this up with net.minecraft.cam72cam.umc.api.util.math.ChunkPos
     public static long asLong(int x, int y, int z) {
         long i = 0L;
         i |= ((long)x & 4194303L) << 42;

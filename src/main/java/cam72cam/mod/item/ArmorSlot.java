@@ -1,7 +1,5 @@
 package cam72cam.mod.item;
 
-import net.minecraft.inventory.EntityEquipmentSlot;
-
 public enum ArmorSlot {
     MAINHAND(EntityEquipmentSlot.MAINHAND),
     OFFHAND(EntityEquipmentSlot.OFFHAND),

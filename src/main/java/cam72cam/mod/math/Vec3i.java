@@ -1,45 +1,28 @@
 package cam72cam.mod.math;
 
 import cam72cam.mod.util.Facing;
-import net.minecraft.util.math.BlockPos;
 
-public class Vec3i {
-    public static final Vec3i ZERO = new Vec3i(BlockPos.ORIGIN);
-    private BlockPos internal = null;
-    public final int x;
-    public final int y;
-    public final int z;
-
-    public Vec3i(int x, int y, int z) {
-        this.x = x;
-        this.y = y;
-        this.z = z;
-    }
+public record Vec3i(int x, int y, int z) {
+    public static final Vec3i ZERO = new Vec3i(0, 0, 0);
 
     public Vec3i(double x, double y, double z) {
         int xi = (int) x;
         int yi = (int) y;
         int zi = (int) z;
-        if (xi > x) { xi -= 1; }
-        if (yi > y) { yi -= 1; }
-        if (zi > z) { zi -= 1; }
-        this.x = xi;
-        this.y = yi;
-        this.z = zi;
-    }
-
-    public Vec3i(BlockPos pos) {
-        this(pos.getX(), pos.getY(), pos.getZ());
-        internal = pos;
+        if (xi > x) {
+            xi -= 1;
+        }
+        if (yi > y) {
+            yi -= 1;
+        }
+        if (zi > z) {
+            zi -= 1;
+        }
+        this(xi, yi, zi);
     }
 
     public Vec3i(Vec3d pos) {
         this(pos.x, pos.y, pos.z);
-    }
-
-    @Deprecated
-    public Vec3i(long serialized) {
-        this(BlockPos.fromLong(serialized));
     }
 
     public Vec3i offset(Facing facing, int offset) {
@@ -127,31 +110,17 @@ public class Vec3i {
     }
 
     public Vec3i rotate(Rotation rotation) {
-        switch (rotation)
-        {
-            case NONE:
-            default:
-                return this;
-            case CLOCKWISE_90:
-                return new Vec3i(-z, y, x);
-            case CLOCKWISE_180:
-                return new Vec3i(-x, y, -z);
-            case COUNTERCLOCKWISE_90:
-                return new Vec3i(z, y, -x);
-        }
-    }
-
-    public BlockPos internal() {
-        if (internal == null) {
-            internal = new BlockPos(x, y, z);
-        }
-        return internal;
+        return switch (rotation) {
+            case CLOCKWISE_90 -> new Vec3i(-z, y, x);
+            case CLOCKWISE_180 -> new Vec3i(-x, y, -z);
+            case COUNTERCLOCKWISE_90 -> new Vec3i(z, y, -x);
+            default -> this;
+        };
     }
 
     @Override
     public boolean equals(Object other) {
-        if (other instanceof Vec3i) {
-            Vec3i ov = (Vec3i) other;
+        if (other instanceof Vec3i ov) {
             return ov.x == this.x && ov.y == this.y && ov.z == this.z;
         }
         return false;
@@ -160,11 +129,6 @@ public class Vec3i {
     @Override
     public String toString() {
         return String.format("(%s, %s, %s)", this.x, this.y, this.z);
-    }
-
-    @Override
-    public int hashCode() {
-        return (this.y + this.z * 31) * 31 + this.x;
     }
 
     public Vec3d toChunkMin() {

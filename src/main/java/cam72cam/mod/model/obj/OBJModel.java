@@ -1,14 +1,16 @@
 package cam72cam.mod.model.obj;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.obj.OBJTextureSheet;
 import cam72cam.mod.render.obj.OBJRender;
 import cam72cam.mod.render.opengl.CustomTexture;
 import cam72cam.mod.render.opengl.RenderState;
 import cam72cam.mod.resource.Identifier;
-import cam72cam.mod.serialization.*;
+import cam72cam.mod.serialization.ResourceCache;
+import cam72cam.mod.serialization.TagCompound;
+import cam72cam.umc.serialization.*;
 import cam72cam.mod.serialization.ResourceCache.GenericByteBuffer;
 import org.apache.commons.lang3.tuple.Pair;
 
@@ -50,7 +52,7 @@ public class OBJModel {
     }
 
     public OBJModel(Identifier modelLoc, float darken, double scale, Collection<String> variants, int cacheSeconds, Function<Integer, List<Integer>> lodSizes) throws Exception {
-        ModCore.debug("Start obj model " + modelLoc);
+        UMC.debug("Start obj model " + modelLoc);
         List<Integer> lodValues;
         if (lodSizes != null) {
             lodValues = lodSizes.apply(Config.getMaxTextureSize());
@@ -111,7 +113,7 @@ public class OBJModel {
 
 
             for (String variant : meta.getList("variants", k -> k.getString("variant"))) {
-                ModCore.debug("%s : tex %s", modelLoc, variant);
+                UMC.debug("%s : tex %s", modelLoc, variant);
                 Map<Integer, OBJTextureSheet> baseTexLodMap = new HashMap<>();
 
                 int texSize = Math.max(textureWidth, textureHeight);
@@ -119,11 +121,11 @@ public class OBJModel {
                     BufferedImage img = builder.getTextures().get(variant).get();
                     if (Config.DebugTextureSheets) {
                         try {
-                            File cacheFile = ModCore.cacheFile(new Identifier(modelLoc.getDomain() + "debug", modelLoc.getPath() + "_" + variant + ".png"));
-                            ModCore.info("Writing debug to " + cacheFile);
+                            File cacheFile = UMC.cacheFile(new Identifier(modelLoc.getDomain() + "debug", modelLoc.getPath() + "_" + variant + ".png"));
+                            UMC.info("Writing debug to " + cacheFile);
                             ImageIO.write(img, "png", cacheFile);
                         } catch (IOException e) {
-                            ModCore.catching(e);
+                            UMC.catching(e);
                         }
                     }
                     return new GenericByteBuffer(toRGBA(img));
@@ -148,11 +150,11 @@ public class OBJModel {
                             BufferedImage img = builder.getNormals().get(variant).get();
                             if (Config.DebugTextureSheets) {
                                 try {
-                                    File cacheFile = ModCore.cacheFile(new Identifier(modelLoc.getDomain() + "debug", modelLoc.getPath() + "_" + variant + "_norm.png"));
-                                    ModCore.info("Writing debug normal to " + cacheFile);
+                                    File cacheFile = UMC.cacheFile(new Identifier(modelLoc.getDomain() + "debug", modelLoc.getPath() + "_" + variant + "_norm.png"));
+                                    UMC.info("Writing debug normal to " + cacheFile);
                                     ImageIO.write(img, "png", cacheFile);
                                 } catch (IOException e) {
-                                    ModCore.catching(e);
+                                    UMC.catching(e);
                                 }
                             }
                             return new GenericByteBuffer(toRGBA(img));
@@ -169,7 +171,7 @@ public class OBJModel {
                         }
                         this.normals.put(variant, normalTexLodMap);
                     } catch (Exception ex) {
-                        ModCore.warn("Unable to load normal map for %s, %s", modelLoc, ex);
+                        UMC.warn("Unable to load normal map for %s, %s", modelLoc, ex);
                     }
                 }
 
@@ -180,11 +182,11 @@ public class OBJModel {
                             BufferedImage img = builder.getSpeculars().get(variant).get();
                             if (Config.DebugTextureSheets) {
                                 try {
-                                    File cacheFile = ModCore.cacheFile(new Identifier(modelLoc.getDomain() + "debug", modelLoc.getPath() + "_" + variant + "_spec.png"));
-                                    ModCore.info("Writing debug specular to " + cacheFile);
+                                    File cacheFile = UMC.cacheFile(new Identifier(modelLoc.getDomain() + "debug", modelLoc.getPath() + "_" + variant + "_spec.png"));
+                                    UMC.info("Writing debug specular to " + cacheFile);
                                     ImageIO.write(img, "png", cacheFile);
                                 } catch (IOException e) {
-                                    ModCore.catching(e);
+                                    UMC.catching(e);
                                 }
                             }
                             return new GenericByteBuffer(toRGBA(img));
@@ -201,7 +203,7 @@ public class OBJModel {
                         }
                         this.speculars.put(variant, specularTexLodMap);
                     } catch (Exception ex) {
-                        ModCore.warn("Unable to load specular map for %s, %s", modelLoc, ex);
+                        UMC.warn("Unable to load specular map for %s, %s", modelLoc, ex);
                     }
                 }
             }
@@ -218,7 +220,7 @@ public class OBJModel {
 
         this.hash = cache.close();
 
-        ModCore.debug("End obj model " + modelLoc);
+        UMC.debug("End obj model " + modelLoc);
     }
 
     public Set<String> groups() {

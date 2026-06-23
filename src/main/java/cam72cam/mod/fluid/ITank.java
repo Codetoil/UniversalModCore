@@ -1,15 +1,9 @@
 package cam72cam.mod.fluid;
 
-import cam72cam.mod.ModCore;
+import cam72cam.mod.UMC;
 import cam72cam.mod.item.ItemStack;
-import net.minecraftforge.fluids.FluidUtil;
-import net.minecraftforge.fluids.capability.IFluidHandler;
-import net.minecraftforge.fluids.capability.IFluidHandlerItem;
 
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
-import java.util.stream.Collectors;
 
 public interface ITank {
     /**
@@ -20,81 +14,7 @@ public interface ITank {
      * See ImmersiveRailroading's FreightTank for an example.
      */
     static ITank getTank(ItemStack stack, Consumer<ItemStack> onUpdate) {
-
-        IFluidHandlerItem internal = FluidUtil.getFluidHandler(stack.internal);
-        if (internal == null) {
-            return null;
-        }
-        return new ITank() {
-            @Override
-            public FluidStack getContents() {
-                return new FluidStack(internal.getTankProperties()[0].getContents());
-            }
-
-            @Override
-            public int getCapacity() {
-                return internal.getTankProperties()[0].getCapacity();
-            }
-
-            @Override
-            public boolean allows(Fluid fluid) {
-                return internal.getTankProperties()[0].canDrainFluidType(new net.minecraftforge.fluids.FluidStack(fluid.internal, 0)) ||
-                        internal.getTankProperties()[0].canFillFluidType(new net.minecraftforge.fluids.FluidStack(fluid.internal, 0));
-            }
-
-            @Override
-            public int fill(FluidStack fluidStack, boolean simulate) {
-                IFluidHandlerItem temp = FluidUtil.getFluidHandler(stack.copy().internal);
-                temp.fill(fluidStack.internal, true);
-                onUpdate.accept(new ItemStack(temp.getContainer()));
-
-                return internal.fill(fluidStack.internal, !simulate);
-            }
-
-            @Override
-            public FluidStack drain(FluidStack fluidStack, boolean simulate) {
-                IFluidHandlerItem temp = FluidUtil.getFluidHandler(stack.copy().internal);
-                temp.drain(fluidStack.internal, true);
-                onUpdate.accept(new ItemStack(temp.getContainer()));
-
-                return new FluidStack(internal.drain(fluidStack.internal, !simulate));
-            }
-        };
-    }
-
-    /** Wrap Forge's IFluidHandler, do not use directly */
-    static List<ITank> getTank(IFluidHandler internal) {
-        return Arrays.stream(internal.getTankProperties()).map(properties -> new ITank() {
-            @Override
-            public FluidStack getContents() {
-                return new FluidStack(properties.getContents());
-            }
-
-            @Override
-            public int getCapacity() {
-                return properties.getCapacity();
-            }
-
-            @Override
-            public boolean allows(Fluid fluid) {
-                return properties.canDrainFluidType(new net.minecraftforge.fluids.FluidStack(fluid.internal, 0)) ||
-                        properties.canFillFluidType(new net.minecraftforge.fluids.FluidStack(fluid.internal, 0));
-            }
-
-            @Override
-            public int fill(FluidStack fluidStack, boolean simulate) {
-                // BUG: This is a pretty fundamental problem with how forge's fluid API works.
-                // IFluidHandler should really expose a list of distinct tanks
-                return internal.fill(fluidStack.internal, !simulate);
-            }
-
-            @Override
-            public FluidStack drain(FluidStack fluidStack, boolean simulate) {
-                // BUG: This is a pretty fundamental problem with how forge's fluid API works.
-                // IFluidHandler should really expose a list of distinct tanks
-                return new FluidStack(internal.drain(fluidStack.internal, !simulate));
-            }
-        }).collect(Collectors.toList());
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Copy of the current contents of the tank */
@@ -173,7 +93,7 @@ public interface ITank {
             try {
                 throw new Exception("Invalid fluid transfer!");
             } catch (Exception e) {
-                ModCore.catching(e);
+                UMC.catching(e);
             }
         }
 

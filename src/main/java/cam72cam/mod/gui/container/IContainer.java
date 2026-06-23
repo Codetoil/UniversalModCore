@@ -1,11 +1,12 @@
 package cam72cam.mod.gui.container;
 
+import cam72cam.mod.gui.GuiRegistry;
 import cam72cam.mod.render.opengl.RenderState;
 
 /**
  * Defines a container which is synchronized both client and server side
  *
- * @see cam72cam.mod.gui.GuiRegistry for more details
+ * @see GuiRegistry for more details
  */
 public interface IContainer {
     @Deprecated

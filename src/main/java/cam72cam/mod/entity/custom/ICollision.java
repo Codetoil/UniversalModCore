@@ -1,7 +1,6 @@
 package cam72cam.mod.entity.custom;
 
 import cam72cam.mod.entity.boundingbox.IBoundingBox;
-import net.minecraft.util.math.AxisAlignedBB;
 
 public interface ICollision {
     ICollision NOP = () -> IBoundingBox.ORIGIN;

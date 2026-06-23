@@ -1,39 +1,24 @@
 package cam72cam.mod.entity.boundingbox;
 
-import cam72cam.mod.block.tile.TileEntity;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
-import net.minecraft.block.Block;
-import net.minecraft.util.math.AxisAlignedBB;
 
 public interface IBoundingBox {
-    IBoundingBox INFINITE = new DefaultBoundingBox(TileEntity.INFINITE_EXTENT_AABB);
-    IBoundingBox ORIGIN = new DefaultBoundingBox(new AxisAlignedBB(0,0,0,0,0,0));
-    IBoundingBox BLOCK = new DefaultBoundingBox(Block.FULL_BLOCK_AABB);
+    IBoundingBox INFINITE = null;
+    IBoundingBox ORIGIN = null;
+    IBoundingBox BLOCK = null;
 
-    static IBoundingBox from(AxisAlignedBB internal) {
-        if (internal == null) {
-            return null;
-        }
-        if (internal instanceof BoundingBox) {
-            return ((BoundingBox) internal).internal;
-        }
-        if (internal == Block.FULL_BLOCK_AABB ||
-                internal.minX == 0 && internal.minY == 0 && internal.minZ == 0 &&
-                internal.maxX == 1 && internal.maxY == 1 && internal.maxZ == 1
-        ) {
-            return BLOCK;
-        }
-        return new DefaultBoundingBox(internal);
+    static IBoundingBox from(BoundingBox internal) {
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Create a new 0 size BB at pos */
     static IBoundingBox from(Vec3i pos) {
-        return from(new AxisAlignedBB(pos.internal()));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     static IBoundingBox from(Vec3d start, Vec3d end) {
-        return from(new AxisAlignedBB(start.x, start.y, start.z, end.x, end.y, end.z));
+        throw new UnsupportedOperationException("This is the API. Look at the per-version implementation for implementation details.");
     }
 
     /** Smaller corner of the BB */

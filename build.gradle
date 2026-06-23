@@ -1,11 +1,10 @@
 plugins {
-    id 'java'
+    id 'java-library'
     id 'idea'
     id 'eclipse'
     id 'maven-publish'
-    id 'net.minecraftforge.gradle' version '[7.0.23,8.0)'
-    id 'net.minecraftforge.renamer' version '1.1.2'
     id("com.gradleup.shadow") version "9.4.2"
+    id "xyz.wagyourtail.jvmdowngrader" version "1.3.6"
 }
 
 configurations {
@@ -23,7 +22,7 @@ repositories {
     }
 }
 
-String umcVersion = "1.3.0"
+String umcVersion = "2.0.0"
 if (!"release".equalsIgnoreCase(System.getProperty("target"))) {
     try {
         umcVersion += "-${(providers.exec { commandLine("git", "rev-parse", "--verify", "--short=7", "HEAD") }.standardOutput.asText.get() as String).substring(0, 7)}"
@@ -31,165 +30,78 @@ if (!"release".equalsIgnoreCase(System.getProperty("target"))) {
         umcVersion += "-unknown"
     }
 }
-version = "1.12.2-forge-" + umcVersion
+version = "api-" + umcVersion
 group = "cam72cam.universalmodcore" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 String archivesBaseName = "UniversalModCore"
 base.archivesName = archivesBaseName
 
 println("version: ${version}")
 
-java.toolchain.languageVersion = JavaLanguageVersion.of(8)
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
 println("Java: ${providers.systemProperty("java.version").get()}, " +
         "JVM: ${providers.systemProperty("java.vm.version").get()} (${providers.systemProperty("java.vendor").get()}), " +
         "Arch: ${providers.systemProperty("os.arch").get()}")
-
-renamer.enableMixinRefmaps {
-    config "mixins.feat.universalmodcore.json"
-    config "mixins.fix.universalmodcore.json"
-}
-
-minecraft {
-    mappings channel: "stable", version: "39-1.12"
-
-    setAccessTransformer("META-INF/accesstransformer.cfg")
-
-    runs {
-        configureEach {
-            workingDir.convention layout.projectDirectory.dir('run')
-            args "--mixin.config=mixins.feat.universalmodcore.json", "--mixin.config=mixins.fix.universalmodcore.json"
-
-            systemProperty "mixin.debug.verbose", "true"
-            systemProperty "mixin.debug.export", "true"
-
-            systemProperty "forge.logging.markers", "SCAN,REGISTRIES,REGISTRYDUMP"
-            systemProperty "forge.logging.console.level", "debug"
-
-            systemProperty "fml.coreMods.load", "cam72cam.mod.UMCMixinPlugin"
-        }
-
-        register("client")
-
-        register("server") {
-            args "--nogui"
-        }
-    }
-}
-
-repositories {
-    minecraft.mavenizer(it)
-    maven fg.forgeMaven
-    maven fg.minecraftLibsMaven
-    mavenCentral()
-    maven {
-        url = 'https://maven.cleanroommc.com'
-    }
-}
-
-dependencies {
-    implementation minecraft.dependency("net.minecraftforge:forge:1.12.2-14.23.5.2847")
-
-    shade renamer.dependency("curse.maven:invtweaks-223094:2482482")
-
-    testImplementation('junit:junit:4.13.1')
-
-    compileOnly('org.lwjgl.lwjgl:lwjgl_util:2.9.1')
-
-    annotationProcessor 'org.ow2.asm:asm-debug-all:5.2'
-    annotationProcessor 'com.google.guava:guava:32.1.2-jre'
-    annotationProcessor 'com.google.code.gson:gson:2.8.9'
-
-    implementation('zone.rong:mixinbooter:10.7') {
-        transitive = false
-    }
-    annotationProcessor('zone.rong:mixinbooter:10.7') {
-        transitive = false
-    }
-
-    runtimeOnly "net.minecrell:terminalconsoleappender:1.3.0"
-
-    shade "at.yawk.lz4:lz4-java:1.10.2"
-}
-
-renamer.mappings.from minecraft.dependency.toSrgFile
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
 }
 
-tasks.named('processResources', ProcessResources) {
-    // this will ensure that this task is redone when the versions change.
-    inputs.property 'version', project.version
-    inputs.property 'mcversion', "1.12.2"
+jvmdg {
+    quiet = false
+    downgradeTo = JavaVersion.VERSION_1_8
+    multiReleaseOriginal = true
+    shadeInlining = false
+    dg(configurations.shade, false)
+    //MR-JAR uses a Incremental Update-like strategy, so add versions here won't cause too much waste
+    multiReleaseVersions = [
+            JavaVersion.VERSION_1_8,  // 1.16 and below
+            JavaVersion.VERSION_16,   // 1.17
+            JavaVersion.VERSION_17,   // 1.18 - 1.20
+            JavaVersion.VERSION_21,   // 1.21
+            JavaVersion.VERSION_25    // 26.1 and beyond as well as modern 1.7.10/1.12.2
+    ].toSet()
+}
 
-    // replace stuff in mcmod.info, nothing else
-    from(sourceSets.main.resources.srcDirs) {
-        include 'mcmod.info'
+repositories {
+    mavenCentral()
+}
 
-        // replace version and mcversion
-        expand 'version':project.version, 'mcversion':"1.12.2"
-    }
+dependencies {
+    api("org.ow2.asm:asm-debug-all:5.2")
+    api("com.google.guava:guava:32.1.2-jre")
+    api("com.google.code.gson:gson:2.8.9")
 
-    // copy everything else except the mcmod.info
-    from(sourceSets.main.resources.srcDirs) {
-        exclude 'mcmod.info'
-    }
+    annotationProcessor("org.ow2.asm:asm-debug-all:5.2")
+    annotationProcessor("com.google.guava:guava:32.1.2-jre")
+    annotationProcessor("com.google.code.gson:gson:2.8.9")
 
-    duplicatesStrategy = DuplicatesStrategy.WARN
+    shade("org.jspecify:jspecify:1.0.0")
+    shade("at.yawk.lz4:lz4-java:1.10.2")
+    shade("javax.vecmath:vecmath:1.5.2")
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+    options.encoding = 'UTF-8'
 }
 
 jar {
     archiveClassifier = 'slim'
-    manifest {
-        attributes (
-                'FMLAT': 'accesstransformer.cfg',
-                "FMLCorePlugin": "cam72cam.mod.UMCMixinPlugin",
-                'FMLCorePluginContainsFMLMod': true,
-                'ForceLoadAsMod': true,
-                'TweakOrder': '0',
-                'TweakClass': 'org.spongepowered.asm.launch.MixinTweaker'
-        )
-    }
-}
-
-renamer.classes(tasks.named('jar', Jar)) {
-    archiveClassifier = 'slim'
-    // We need to use the generated mappings, which includes things generated by the annotation processor
-    mappings renamer.mixin.generatedMappings
-    output = input.map { inputFile ->
-        layout.buildDirectory.file("libs/${inputFile.asFile.name}").get()
-    }
 }
 
 tasks.named("shadowJar") {
     archiveClassifier = ''
     configurations = project.configurations.named('shade').map { [it] }
-    relocate 'net.jpountz', "${project.group}.shade.net.jpountz"
     duplicatesStrategy = DuplicatesStrategy.EXCLUDE
     mergeServiceFiles()
 }
 
-renamer.classes(tasks.named('shadowJar', Jar)) {
-    archiveClassifier = ''
-    // We need to use the generated mappings, which includes things generated by the annotation processor
-    mappings renamer.mixin.generatedMappings
-    output = input.map { inputFile ->
-        layout.buildDirectory.file("libs/${inputFile.asFile.name}").get()
-    }
-}
-
-
-
 assemble.dependsOn shadowJar
-
-test {
-    useJUnit()
-    maxHeapSize = '1G'
-}
 
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifact renameShadowJar
+            artifact jar
             artifact sourcesJar
             artifactId = archivesBaseName
         }
