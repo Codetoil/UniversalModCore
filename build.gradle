@@ -91,7 +91,7 @@ repositories {
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:1.12.2-14.23.5.2847")
 
-    shade "cam72cam.universalmodcore:UniversalModCore:api-${umcVersion}"
+    shade "cam72cam.universalmodcore:UniversalModCore:api-2.0.0-xxxxxxx"
 
     shade renamer.dependency("curse.maven:invtweaks-223094:2482482")
 
