@@ -23,7 +23,7 @@ repositories {
     }
 }
 
-String umcVersion = "1.3.0"
+String umcVersion = "2.0.0"
 if (!"release".equalsIgnoreCase(System.getProperty("target"))) {
     try {
         umcVersion += "-${(providers.exec { commandLine("git", "rev-parse", "--verify", "--short=7", "HEAD") }.standardOutput.asText.get() as String).substring(0, 7)}"
@@ -83,10 +83,15 @@ repositories {
     maven {
         url = 'https://maven.cleanroommc.com'
     }
+    maven {
+        url = 'https://teamopenindustry.cc/maven'
+    }
 }
 
 dependencies {
     implementation minecraft.dependency("net.minecraftforge:forge:1.12.2-14.23.5.2847")
+
+    shade "cam72cam.universalmodcore:UniversalModCore:api-${umcVersion}"
 
     shade renamer.dependency("curse.maven:invtweaks-223094:2482482")
 

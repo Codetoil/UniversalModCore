@@ -10,9 +10,9 @@
     "minVersion": "0.5.0"
   },
   "mixins": [
-    "large_entity_collision.MixinVanillaWorld"
+    "cam72cam.umc.impl.mixin.feat.large_entity_collision.MixinVanillaWorld"
   ],
   "client": [
-    "global_renderer.MixinRenderGlobal"
+    "cam72cam.umc.impl.mixin.feat.global_renderer.MixinRenderGlobal"
   ]
 }

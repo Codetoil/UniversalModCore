@@ -10,7 +10,7 @@
     "minVersion": "0.5.0"
   },
   "mixins": [
-    "multi_release.MixinJarDiscoverer"
+    "cam72cam.umc.impl.mixin.fix.multi_release.MixinJarDiscoverer"
   ],
   "client": [
   ]
