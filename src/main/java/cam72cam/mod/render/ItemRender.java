@@ -2,7 +2,6 @@ package cam72cam.mod.render;
 
 import cam72cam.mod.Config;
 import cam72cam.mod.MinecraftClient;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.gui.Progress;
 import cam72cam.mod.item.CustomItem;

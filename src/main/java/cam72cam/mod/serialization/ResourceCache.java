@@ -1,10 +1,8 @@
 package cam72cam.mod.serialization;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.resource.Identifier;
 import cam72cam.mod.resource.Identifier.InputStreamMod;
 import cam72cam.mod.util.ThrowingFunction;
-import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import com.google.common.hash.HashingInputStream;

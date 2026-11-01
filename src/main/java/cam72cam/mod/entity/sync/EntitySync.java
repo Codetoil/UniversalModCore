@@ -1,6 +1,5 @@
 package cam72cam.mod.entity.sync;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.entity.CustomEntity;
 import cam72cam.mod.net.Packet;
 import cam72cam.mod.serialization.SerializationException;

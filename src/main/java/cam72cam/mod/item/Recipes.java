@@ -1,6 +1,5 @@
 package cam72cam.mod.item;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.event.CommonEvents;
 import net.minecraft.item.crafting.Ingredient;
 import net.minecraft.util.NonNullList;

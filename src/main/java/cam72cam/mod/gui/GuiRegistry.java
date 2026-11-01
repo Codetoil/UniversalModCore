@@ -1,6 +1,5 @@
 package cam72cam.mod.gui;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.block.BlockEntity;
 import cam72cam.mod.entity.Entity;
 import cam72cam.mod.entity.Player;

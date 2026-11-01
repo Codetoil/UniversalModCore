@@ -12,9 +12,9 @@ public class Config {
     @ConfigFile.Comment("Max size of a generated texture sheet (-1 == autodetect, 4096 is a sane option)")
     public static int MaxTextureSize = -1;
 
-    public static int getMaxTextureSize() {
-        if (MaxTextureSize < 128 && ModCore.instance != null /*for tests*/) {
-            MaxTextureSize = ModCore.instance.getGPUTextureSize();
+    public static int getMaxTextureSize(UMC umc) {
+        if (MaxTextureSize < 128 && umc != null /*for tests*/) {
+            MaxTextureSize = umc.getGPUTextureSize();
         }
         return MaxTextureSize;
     }

@@ -1,7 +1,6 @@
 package cam72cam.mod.model.obj;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.render.obj.OBJTextureSheet;
 import cam72cam.mod.render.obj.OBJRender;

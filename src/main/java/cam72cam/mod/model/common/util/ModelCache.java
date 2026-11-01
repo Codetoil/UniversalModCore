@@ -1,7 +1,6 @@
 package cam72cam.mod.model.common.util;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.model.common.format.Parser;
 import cam72cam.mod.model.common.material.TextureRepacker;
 import cam72cam.mod.model.common.mesh.*;

@@ -1,6 +1,5 @@
 package cam72cam.mod.resource;
 
-import cam72cam.mod.ModCore;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.resources.IResource;
 import net.minecraftforge.fml.common.Loader;

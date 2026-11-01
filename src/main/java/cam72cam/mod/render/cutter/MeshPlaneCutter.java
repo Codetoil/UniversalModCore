@@ -1,6 +1,5 @@
 package cam72cam.mod.render.cutter;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.math.Plane;
 import cam72cam.mod.math.Vec3d;
 import org.apache.commons.lang3.tuple.Pair;

@@ -1,6 +1,5 @@
 package cam72cam.mod.entity;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.event.CommonEvents;
 import cam72cam.mod.resource.Identifier;

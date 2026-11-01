@@ -1,7 +1,6 @@
 package cam72cam.mod.world;
 
 import cam72cam.mod.MinecraftClient;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.block.BlockEntity;
 import cam72cam.mod.block.BlockType;
 import cam72cam.mod.block.IBlockTypeBlock;

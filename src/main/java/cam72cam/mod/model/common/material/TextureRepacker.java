@@ -1,7 +1,6 @@
 package cam72cam.mod.model.common.material;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.model.common.mesh.IModelBuilder;
 import cam72cam.mod.model.common.util.ImageUtils;
 import cam72cam.mod.resource.Identifier;

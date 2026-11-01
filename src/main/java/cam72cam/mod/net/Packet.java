@@ -5,7 +5,6 @@ import java.util.Map;
 import java.util.function.Supplier;
 
 import cam72cam.mod.MinecraftClient;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.ModEvent;
 import cam72cam.mod.entity.Entity;
 import cam72cam.mod.entity.Player;

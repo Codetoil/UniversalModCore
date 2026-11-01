@@ -1,6 +1,5 @@
 package cam72cam.mod.render;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.event.CommonEvents;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.world.World;

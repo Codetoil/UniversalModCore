@@ -1,6 +1,5 @@
 package cam72cam.mod.event;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.entity.ModdedEntity;
 import cam72cam.mod.world.ChunkPos;
 import net.minecraft.entity.player.EntityPlayer;

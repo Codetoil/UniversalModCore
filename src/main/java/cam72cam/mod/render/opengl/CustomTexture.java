@@ -1,7 +1,6 @@
 package cam72cam.mod.render.opengl;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.util.With;
 import org.lwjgl.opengl.GL11;

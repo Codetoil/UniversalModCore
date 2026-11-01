@@ -1,6 +1,5 @@
 package cam72cam.mod.fluid;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.item.ItemStack;
 import net.minecraftforge.fluids.FluidUtil;
 import net.minecraftforge.fluids.capability.IFluidHandler;

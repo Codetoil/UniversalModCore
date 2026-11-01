@@ -1,6 +1,5 @@
 package cam72cam.mod.gui;
 
-import cam72cam.mod.ModCore;
 import net.minecraftforge.fml.common.ProgressManager;
 import net.minecraftforge.fml.common.ProgressManager.ProgressBar;
 

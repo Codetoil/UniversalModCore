@@ -1,6 +1,5 @@
 package cam72cam.mod.config;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.gui.screen.*;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;

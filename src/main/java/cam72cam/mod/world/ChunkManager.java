@@ -1,6 +1,5 @@
 package cam72cam.mod.world;
 
-import cam72cam.mod.ModCore;
 import cam72cam.mod.event.CommonEvents;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.serialization.TagCompound;

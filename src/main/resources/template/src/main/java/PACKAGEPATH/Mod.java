@@ -1,7 +1,5 @@
 package #PACKAGE#;
 
-import cam72cam.mod.ModCore;
-
 @net.minecraftforge.fml.common.Mod(modid = Mod.MODID, name = "#NAME#", version = "#VERSION#", dependencies = "#FORGE_STRING_DEPENDENCIES#", acceptedMinecraftVersions = "[1.12,1.13)")
 public class Mod {
     public static final String MODID = "#ID#";

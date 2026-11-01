@@ -1,7 +1,6 @@
 package cam72cam.mod.gui.helpers;
 
 import cam72cam.mod.MinecraftClient;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.fluid.Fluid;
 import cam72cam.mod.item.ItemStack;
 import cam72cam.mod.text.PlayerMessage;

@@ -1,14 +1,11 @@
 package cam72cam.mod.model.obj;
 
 import cam72cam.mod.Config;
-import cam72cam.mod.ModCore;
 import cam72cam.mod.model.common.util.ImageUtils;
 import cam72cam.mod.resource.Identifier;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.imageio.ImageIO;
-import javax.imageio.ImageReader;
-import javax.imageio.stream.ImageInputStream;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
