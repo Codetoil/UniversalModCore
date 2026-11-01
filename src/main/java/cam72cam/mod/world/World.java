@@ -4,10 +4,8 @@ import cam72cam.mod.MinecraftClient;
 import cam72cam.mod.block.BlockEntity;
 import cam72cam.mod.block.BlockType;
 import cam72cam.mod.block.IBlockTypeBlock;
-import cam72cam.mod.block.tile.TileEntity;
 import cam72cam.mod.entity.*;
-import cam72cam.mod.entity.boundingbox.BoundingBox;
-import cam72cam.mod.entity.boundingbox.DefaultBoundingBox;
+import cam72cam.mod.entity.boundingbox.BoundingBoxes;
 import cam72cam.mod.entity.boundingbox.IBoundingBox;
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.event.CommonEvents;
@@ -72,6 +70,10 @@ public class World {
         internal = world;
         isClient = world.isRemote;
         isServer = !world.isRemote;
+    }
+
+    public BoundingBoxes boundingBoxes() {
+
     }
 
     /** Helper function to get a world map (client or server) */

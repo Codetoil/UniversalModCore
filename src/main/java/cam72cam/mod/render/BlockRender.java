@@ -3,7 +3,6 @@ package cam72cam.mod.render;
 import cam72cam.mod.block.BlockEntity;
 import cam72cam.mod.block.BlockType;
 import cam72cam.mod.block.BlockTypeEntity;
-import cam72cam.mod.block.tile.TileEntity;
 import cam72cam.mod.event.ClientEvents;
 import cam72cam.mod.render.opengl.RenderContext;
 import cam72cam.mod.render.opengl.RenderState;

@@ -1,7 +1,6 @@
 package cam72cam.mod.serialization;
 
 import cam72cam.mod.block.BlockEntity;
-import cam72cam.mod.block.tile.TileEntity;
 import cam72cam.mod.entity.Entity;
 import cam72cam.mod.item.ItemStack;
 import cam72cam.mod.math.Vec3d;

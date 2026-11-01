@@ -1,6 +1,5 @@
 package cam72cam.mod.entity;
 
-import cam72cam.mod.entity.boundingbox.BoundingBox;
 import cam72cam.mod.entity.boundingbox.IBoundingBox;
 import cam72cam.mod.entity.custom.*;
 import cam72cam.mod.entity.sync.TagSync;

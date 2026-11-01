@@ -1,6 +1,5 @@
 package cam72cam.mod.block;
 
-import cam72cam.mod.block.tile.TileEntity;
 import cam72cam.mod.energy.IEnergy;
 import cam72cam.mod.entity.Player;
 import cam72cam.mod.entity.boundingbox.IBoundingBox;
@@ -20,18 +19,12 @@ import cam72cam.mod.world.World;
  * expose certain capabilities (Fluid/Item/Energy/etc...).
  */
 public abstract class BlockEntity {
-    /** Wraps the minecraft construct, do not use directly. */
-    public TileEntity internal;
 
     /** @return the current world. */
-    public World getWorld() {
-        return internal.getUMCWorld();
-    }
+    public abstract World getWorld();
 
     /** @return the current position. */
-    public Vec3i getPos() {
-        return internal.getUMCPos();
-    }
+    public abstract Vec3i getPos();
 
     /**
      * Use for explicit loading, prefer TagSerializer.<br>
@@ -94,16 +87,10 @@ public abstract class BlockEntity {
     }
 
     /** Marks block for re-render on the client or sends an update packet on the server. */
-    public void markDirty() {
-        internal.markDirty();
-    }
+    public abstract void markDirty();
 
     /** @return the data that would be written to disk on world save */
-    public TagCompound getData() {
-        TagCompound data = new TagCompound();
-        internal.writeToNBT(data.internal);
-        return data;
-    }
+    public abstract TagCompound getData();
 
     /** Implement to support inventory capabilities */
     public IInventory getInventory(Facing side) {
@@ -138,14 +125,5 @@ public abstract class BlockEntity {
     /** @return Max render distance for this entity */
     public double getRenderDistance() {
         return 4096.0D; // MC default
-    }
-
-    /**
-     * Implement only when defining a new type of internal TileEntity
-     * @param id BlockTypeEntity identifier
-     * @return A new instance of the custom TileEntity
-     */
-    protected TileEntity supplier(Identifier id) {
-        return new TileEntity(id);
     }
 }

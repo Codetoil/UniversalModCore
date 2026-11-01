@@ -1,24 +1,12 @@
 package cam72cam.mod.block;
 
-import cam72cam.mod.block.tile.TileEntity;
 import cam72cam.mod.entity.Player;
-import cam72cam.mod.entity.boundingbox.BoundingBox;
 import cam72cam.mod.entity.boundingbox.IBoundingBox;
 import cam72cam.mod.item.ItemStack;
 import cam72cam.mod.math.Vec3d;
 import cam72cam.mod.math.Vec3i;
 import cam72cam.mod.util.Facing;
 import cam72cam.mod.world.World;
-import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
-import net.minecraft.block.state.BlockStateContainer;
-import net.minecraft.block.state.IBlockState;
-import net.minecraft.util.math.AxisAlignedBB;
-import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.IBlockAccess;
-import net.minecraftforge.common.property.ExtendedBlockState;
-import net.minecraftforge.common.property.IExtendedBlockState;
-import net.minecraftforge.common.property.IUnlistedProperty;
 
 import javax.annotation.Nonnull;
 
@@ -28,19 +16,13 @@ import javax.annotation.Nonnull;
  * Most if not all of the functions exposed are now redirected to the block entity (break/pick/etc...)
  */
 public abstract class BlockTypeEntity extends BlockType {
-    /** This is a crappy hack that allows us to pass the block entity instance into the renderer */
-    public static final PropertyObject BLOCK_DATA = new PropertyObject("BLOCK_DATA");
 
     // Cached from ctr
     private final boolean isRedstoneProvider;
 
     public BlockTypeEntity(String modID, String name) {
         super(modID, name);
-        TileEntity.register(this::constructBlockEntity, id);
         this.isRedstoneProvider = constructBlockEntity() instanceof IRedstoneProvider;
-
-        // Force supplier load (may trigger static blocks like TE registration)
-        constructBlockEntity().supplier(id);
     }
 
     /** Supply your custom BlockEntity constructor here */
@@ -51,31 +33,13 @@ public abstract class BlockTypeEntity extends BlockType {
         return isRedstoneProvider;
     }
 
-    /** Hack for initializing a "fake" te */
-    public final BlockEntity createBlockEntity(World world, Vec3i pos) {
-        TileEntity te = ((TileEntity) internal.createTileEntity(null, null));
-        te.setWorld(world.internal);
-        te.setPos(pos.internal());
-        return te.instance();
-    }
-
     /*
 
     BlockType Implementation
 
     */
 
-    protected BlockInternal getBlock() {
-        return new BlockTypeInternal();
-    }
-
-    private BlockEntity getInstance(World world, Vec3i pos) {
-        TileEntity te = world.getTileEntity(pos, TileEntity.class);
-        if (te != null) {
-            return te.instance();
-        }
-        return null;
-    }
+    protected abstract BlockEntity getInstance(World world, Vec3i pos);
 
     @Override
     public final boolean tryBreak(World world, Vec3i pos, Player player) {
